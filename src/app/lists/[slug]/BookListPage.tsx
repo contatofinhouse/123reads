@@ -4,6 +4,7 @@ import { Book } from "@/data/influencers";
 import { getAmazonLink, getCoverUrl } from "@/lib/amazon";
 import { StarRating } from "@/components/StarRating";
 import Link from "next/link";
+import Image from "next/image";
 
 interface Props {
   title: string;
@@ -38,10 +39,13 @@ export function BookListPage({ title, subtitle, books }: Props) {
             >
               <div className="recommendation-result">
                 <div className="book-cover-container">
-                  <img
+                  <Image
                     src={getCoverUrl(book.isbn)}
                     alt={book.title}
+                    width={100}
+                    height={150}
                     className="book-cover-img"
+                    priority={idx < 6}
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.style.display = "none";

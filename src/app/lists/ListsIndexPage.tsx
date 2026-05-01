@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import Image from "next/image";
 
 interface InfluencerSummary {
   name: string;
@@ -70,7 +71,7 @@ export function ListsIndexPage({ influencers, thematicLists }: Props) {
               <Link key={list.slug} href={`/lists/${list.slug}`} className="card-link">
                 <div className="influencer-card">
                   <div className="influencer-header">
-                    <img src={list.image} alt={list.title} className="influencer-avatar" />
+                    <Image src={list.image} alt={list.title} width={56} height={56} className="influencer-avatar" />
                     <div>
                       <h3 className="influencer-name">{list.title}</h3>
                       <span className="influencer-count">{list.bookCount} books</span>
@@ -90,7 +91,7 @@ export function ListsIndexPage({ influencers, thematicLists }: Props) {
               <Link key={inf.slug} href={`/lists/${inf.slug}`} className="card-link">
                 <div className="influencer-card">
                   <div className="influencer-header">
-                    <img src={inf.image} alt={inf.name} className="influencer-avatar" />
+                    <Image src={inf.image} alt={inf.name} width={56} height={56} className="influencer-avatar" />
                     <div>
                       <h3 className="influencer-name">{inf.name}</h3>
                       <span className="influencer-count">{inf.bookCount} books</span>

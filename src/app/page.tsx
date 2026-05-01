@@ -6,6 +6,7 @@ import { getAmazonLink, getCoverUrl } from "@/lib/amazon";
 import { StarRating } from "@/components/StarRating";
 import { MoodIcon } from "@/components/MoodIcon";
 import Link from "next/link";
+import Image from "next/image";
 
 const AGE_FILTERS = ["Children", "Teens", "Young Adult", "Adult"];
 const GENRE_FILTERS = ["Fiction", "Non-fiction", "Sci-Fi", "Fantasy", "Business", "Self-Help", "History"];
@@ -341,7 +342,13 @@ export default function Home() {
                   <a href={getAmazonLink(rec.title, rec.author)} target="_blank" rel="noopener noreferrer" className="recommendation-result-link">
                     <div className="recommendation-result">
                       <div className="book-cover-container">
-                        <img src={getCoverUrl(rec.isbn)} alt={rec.title} className="book-cover-img"
+                        <Image 
+                          src={getCoverUrl(rec.isbn)} 
+                          alt={rec.title} 
+                          width={100}
+                          height={150}
+                          className="book-cover-img"
+                          priority={idx < 4}
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;
                             target.style.display = "none";
@@ -392,7 +399,12 @@ export default function Home() {
               <div className="botd-label">BOOK OF THE DAY</div>
               <div className="botd-content">
                 <div className="book-cover-container">
-                  <img src={getCoverUrl(bookOfDay.isbn)} alt={bookOfDay.title} className="book-cover-img"
+                  <Image 
+                    src={getCoverUrl(bookOfDay.isbn)} 
+                    alt={bookOfDay.title} 
+                    width={100}
+                    height={150}
+                    className="book-cover-img"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.style.display = "none";
@@ -424,9 +436,11 @@ export default function Home() {
               <Link key={influencer.slug} href={`/lists/${influencer.slug}`} className="card-link">
                 <div className="influencer-card">
                   <div className="influencer-header">
-                    <img
+                    <Image
                       src={influencer.image}
                       alt={influencer.name}
+                      width={56}
+                      height={56}
                       className="influencer-avatar"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { CrossReference } from "@/data/cross-references";
 import { getAmazonLink, getCoverUrl } from "@/lib/amazon";
+import Image from "next/image";
 
 interface Props {
   crossRefs: CrossReference[];
@@ -37,10 +38,13 @@ export function InsightsPage({ crossRefs }: Props) {
             >
               <div className="recommendation-result">
                 <div className="book-cover-container">
-                  <img
+                  <Image
                     src={getCoverUrl(ref.isbn)}
                     alt={ref.title}
+                    width={100}
+                    height={150}
                     className="book-cover-img"
+                    priority={idx < 6}
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.style.display = "none";
