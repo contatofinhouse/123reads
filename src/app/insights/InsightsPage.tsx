@@ -13,7 +13,7 @@ export function InsightsPage({ crossRefs }: Props) {
     <div className="container">
       <header>
         <Link href="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <h1>READ<span>RADAR</span></h1>
+          <h1>123<span>READS</span></h1>
         </Link>
       </header>
 

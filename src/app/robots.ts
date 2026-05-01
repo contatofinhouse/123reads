@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://readradar.app/sitemap.xml",
+    sitemap: "https://123reads.app/sitemap.xml",
   };
 }

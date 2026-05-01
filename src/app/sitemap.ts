@@ -2,7 +2,7 @@ import { influencers } from "@/data/influencers";
 import { thematicLists } from "@/data/thematic-lists";
 import type { MetadataRoute } from "next";
 
-const BASE_URL = "https://readradar.app";
+const BASE_URL = "https://123reads.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const influencerUrls = influencers.map(i => ({

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { influencers } from "@/data/influencers";
 import { getAmazonLink, getCoverUrl } from "@/lib/amazon";
 import { StarRating } from "@/components/StarRating";
@@ -69,6 +69,8 @@ export default function Home() {
   const [placeholderText, setPlaceholderText] = useState("");
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
+  
+  const resultsRef = useRef<HTMLDivElement>(null);
 
   // Typewriter effect
   useEffect(() => {
@@ -139,6 +141,11 @@ export default function Home() {
     setError("");
     setRecommendations([]);
 
+    // Auto-scroll to results to improve mobile UX
+    setTimeout(() => {
+      resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
+
     try {
       const res = await fetch("/api/recommend", {
         method: "POST",
@@ -183,6 +190,9 @@ export default function Home() {
           <Link href="/lists">Lists</Link>
           <Link href="/insights">Insights</Link>
           <button className="shelf-toggle" onClick={() => setShowShelf(!showShelf)}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path>
+            </svg>
             My Shelf {shelf.length > 0 && <span className="shelf-badge">{shelf.length}</span>}
           </button>
         </nav>
@@ -226,7 +236,7 @@ export default function Home() {
             <div className="input-group">
               <input
                 type="text"
-                className={`chat-input ${prompt === "" && activeFilters.length > 0 ? "dimmed" : ""}`}
+                className="chat-input"
                 placeholder={placeholderText}
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
@@ -235,7 +245,7 @@ export default function Home() {
               />
             </div>
             <div className="button-group">
-              <button className="primary" onClick={() => handleSearch()} disabled={loading || (prompt.trim() === "" && activeFilters.length === 0)}>
+              <button className="primary" onClick={() => handleSearch()} disabled={loading}>
                 {loading ? <div className="loading-spinner" /> : "Search"}
               </button>
               <button className="secondary" onClick={() => handleSearch(true)} disabled={loading}>
@@ -301,6 +311,9 @@ export default function Home() {
             ))}
           </div>
 
+          {/* Spacer anchor to clear sticky header */}
+          <div ref={resultsRef} style={{ scrollMarginTop: "120px" }} />
+
           {error && <div style={{ color: "#d32f2f", marginTop: "1rem", fontWeight: 600, fontSize: "0.85rem" }}>{error}</div>}
 
           {/* Skeleton Loading */}
@@ -360,7 +373,11 @@ export default function Home() {
                     }}
                     title={isOnShelf(rec.title) ? "Remove from shelf" : "Save to shelf"}
                   >
-                    {isOnShelf(rec.title) ? "★" : "☆"}
+                    {isOnShelf(rec.title) ? (
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path></svg>
+                    ) : (
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path></svg>
+                    )}
                   </button>
                 </div>
               ))}
@@ -401,7 +418,7 @@ export default function Home() {
 
         {/* Bottom Level: Influencer Preview */}
         <section className="influencers-section">
-          <h2 className="section-title">Curated by Experts</h2>
+          <h2 className="section-title">Curated by Brilliant Minds</h2>
           <div className="influencer-grid">
             {influencers.slice(0, 6).map((influencer) => (
               <Link key={influencer.slug} href={`/lists/${influencer.slug}`} className="card-link">

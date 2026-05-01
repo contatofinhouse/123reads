@@ -1,11 +1,45 @@
 import { GoogleGenAI } from "@google/genai";
 import { NextResponse } from "next/server";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
+// Initialize Ratelimit only if Upstash variables are present
+const redisUrl = process.env.UPSTASH_REDIS_REST_URL;
+const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+let ratelimit: Ratelimit | null = null;
+
+if (redisUrl && redisToken) {
+  ratelimit = new Ratelimit({
+    redis: new Redis({ url: redisUrl, token: redisToken }),
+    limiter: Ratelimit.slidingWindow(5, "1 m"), // 5 requests per minute per IP
+  });
+}
+
 export async function POST(req: Request) {
   try {
+    // 1. Rate Limiting
+    if (ratelimit) {
+      const ip = req.headers.get("x-forwarded-for") ?? "anonymous";
+      const { success } = await ratelimit.limit(ip);
+      if (!success) {
+        return NextResponse.json(
+          { error: "Too many requests. Please wait a minute before trying again." },
+          { status: 429 }
+        );
+      }
+    }
+
     const { prompt, filters, isLucky } = await req.json();
+
+    // 2. Input Validation
+    if (prompt && prompt.length > 100) {
+      return NextResponse.json(
+        { error: "Search prompt is too long. Please keep it under 100 characters." },
+        { status: 400 }
+      );
+    }
 
     const filterContext = filters && filters.length > 0 
       ? `\nTake into consideration these filters/preferences: ${filters.join(", ")}.`
@@ -16,7 +50,7 @@ export async function POST(req: Request) {
       ? `User Query: "${prompt}"` 
       : `User requested a ${isLucky ? "COMPLETELY RANDOM and SURPRISING" : "curated"} recommendation list based on filters. Seed: ${randomSeed}`;
 
-    const systemPrompt = `You are a book recommendation expert for 'ReadRadar'. 
+    const systemPrompt = `You are a book recommendation expert for '123reads'. 
 The user is looking for book suggestions.
 ${filterContext}
 

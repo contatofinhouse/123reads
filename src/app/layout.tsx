@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://123reads.com"),
+  metadataBase: new URL("https://123reads.app"),
   title: {
     default: "123reads | AI Book Recommendations",
     template: "%s | 123reads",
