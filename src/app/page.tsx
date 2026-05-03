@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { influencers } from "@/data/influencers";
+import { useState, useEffect, useRef, Suspense } from "react";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { influencers, type Influencer } from "@/data/influencers";
 import { getAmazonLink, getCoverUrl } from "@/lib/amazon";
 import { StarRating } from "@/components/StarRating";
 import { MoodIcon } from "@/components/MoodIcon";
 import Link from "next/link";
 import Image from "next/image";
+import { InfluencerAvatar } from "@/components/InfluencerAvatar";
 
 const AGE_FILTERS = ["Children", "Teens", "Young Adult", "Adult"];
 const GENRE_FILTERS = ["Fiction", "Non-fiction", "Sci-Fi", "Fantasy", "Business", "Self-Help", "History"];
@@ -26,11 +28,11 @@ const QUICK_PROMPTS = [
 ];
 
 const TYPEWRITER_PHRASES = [
-  "Or type anything... a mood, a topic, a vibe...",
-  "A book to read on a rainy day...",
-  "Something that makes me smarter...",
-  "A story that will make me cry...",
-  "Best startup business advice...",
+  "Find books to master personal finance...",
+  "Get recommendations for high-performance habits...",
+  "Discover the best biographies for leaders...",
+  "Show me the top books on artificial intelligence...",
+  "Find life-changing books for entrepreneurs...",
 ];
 
 interface Recommendation {
@@ -55,7 +57,7 @@ interface BookOfDay {
   reason: string;
 }
 
-export default function Home() {
+function HomeContent() {
   const [prompt, setPrompt] = useState("");
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
@@ -64,6 +66,17 @@ export default function Home() {
   const [bookOfDay, setBookOfDay] = useState<BookOfDay | null>(null);
   const [shelf, setShelf] = useState<SavedBook[]>([]);
   const [showShelf, setShowShelf] = useState(false);
+  const [copiedId, setCopiedId] = useState<number | null>(null);
+  const [activeInfluencerCategory, setActiveInfluencerCategory] = useState("All");
+  const INFLUENCER_CATEGORIES = ["All", "Tech", "Business", "Authors", "Science", "Culture", "Lifestyle"];
+  
+  const filteredInfluencers = activeInfluencerCategory === "All" 
+    ? influencers 
+    : influencers.filter(i => i.category === activeInfluencerCategory);
+  
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
   
   // UX Features
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
@@ -108,6 +121,13 @@ export default function Home() {
       const saved = localStorage.getItem("123reads-shelf");
       if (saved) setShelf(JSON.parse(saved));
     } catch {}
+
+    // Handle initial search from URL
+    const q = searchParams.get("q");
+    if (q) {
+      setPrompt(q);
+      handleSearch(false, q);
+    }
   }, []);
 
   const saveToShelf = (book: SavedBook) => {
@@ -148,6 +168,13 @@ export default function Home() {
     }, 100);
 
     try {
+      // Update URL with search query
+      if (searchPrompt.trim()) {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set("q", searchPrompt);
+        router.push(`${pathname}?${params.toString()}`, { scroll: false });
+      }
+
       const res = await fetch("/api/recommend", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -180,6 +207,33 @@ export default function Home() {
 
   const getInitials = (name: string) =>
     name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
+
+  const handleShare = (e: React.MouseEvent, idx: number) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const searchUrl = new URL(window.location.origin);
+    if (prompt) {
+      searchUrl.searchParams.set("q", prompt);
+    }
+    
+    const shareText = `Check out this book recommendation for "${prompt || "books"}" on 123reads! 📚\n\n${searchUrl.toString()}`;
+    
+    if (navigator.share) {
+      navigator.share({
+        title: '123reads Recommendation',
+        text: shareText,
+        url: searchUrl.toString(),
+      }).catch(() => {
+        navigator.clipboard.writeText(shareText);
+      });
+    } else {
+      navigator.clipboard.writeText(shareText);
+    }
+    
+    setCopiedId(idx);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
 
   return (
     <div className="container">
@@ -254,6 +308,19 @@ export default function Home() {
               </button>
             </div>
           </div>
+
+          {recommendations.length > 0 && !loading && (
+            <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "1rem" }}>
+              <button 
+                className="secondary" 
+                onClick={(e) => handleShare(e, -1)}
+                style={{ fontSize: "0.8rem", padding: "0.4rem 0.8rem", display: "flex", alignItems: "center", gap: "0.5rem" }}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m22 2-7 20-4-9-9-4Z"></path><path d="M22 2 11 13"></path></svg>
+                Share these results
+              </button>
+            </div>
+          )}
 
           {/* Progressive Disclosure for Filters */}
           <div style={{ marginBottom: "1.5rem" }}>
@@ -371,21 +438,35 @@ export default function Home() {
                       </div>
                     </div>
                   </a>
-                  <button
-                    className={`bookmark-btn ${isOnShelf(rec.title) ? "saved" : ""}`}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (isOnShelf(rec.title)) removeFromShelf(rec.title);
-                      else saveToShelf({ title: rec.title, author: rec.author, isbn: rec.isbn, rating: rec.rating });
-                    }}
-                    title={isOnShelf(rec.title) ? "Remove from shelf" : "Save to shelf"}
-                  >
-                    {isOnShelf(rec.title) ? (
-                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path></svg>
-                    ) : (
-                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path></svg>
-                    )}
-                  </button>
+                  <div className="card-actions">
+                    <button
+                      className="share-btn"
+                      onClick={(e) => handleShare(e, idx)}
+                      title="Share search results"
+                    >
+                      {copiedId === idx ? (
+                        <span style={{ fontSize: "0.7rem", color: "var(--accent-color)" }}>Copied!</span>
+                      ) : (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m22 2-7 20-4-9-9-4Z"></path><path d="M22 2 11 13"></path></svg>
+                      )}
+                    </button>
+                    <button
+                      className={`bookmark-btn ${isOnShelf(rec.title) ? "saved" : ""}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (isOnShelf(rec.title)) removeFromShelf(rec.title);
+                        else saveToShelf({ title: rec.title, author: rec.author, isbn: rec.isbn, rating: rec.rating });
+                      }}
+                      title={isOnShelf(rec.title) ? "Remove from shelf" : "Save to shelf"}
+                    >
+                      {isOnShelf(rec.title) ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path></svg>
+                      ) : (
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path></svg>
+                      )}
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -430,29 +511,31 @@ export default function Home() {
 
         {/* Bottom Level: Influencer Preview */}
         <section className="influencers-section">
-          <h2 className="section-title">Curated by Brilliant Minds</h2>
+          <div className="section-header-row">
+            <h2 className="section-title">Curated by Brilliant Minds</h2>
+            <div className="filter-dropdown-container">
+              <select 
+                value={activeInfluencerCategory} 
+                onChange={(e) => setActiveInfluencerCategory(e.target.value)}
+                className="category-select"
+              >
+                {INFLUENCER_CATEGORIES.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
           <div className="influencer-grid">
-            {influencers.slice(0, 6).map((influencer) => (
+            {filteredInfluencers.slice(0, 8).map((influencer) => (
               <Link key={influencer.slug} href={`/lists/${influencer.slug}`} className="card-link">
                 <div className="influencer-card">
                   <div className="influencer-header">
-                    <Image
-                      src={influencer.image}
-                      alt={influencer.name}
-                      width={56}
-                      height={56}
-                      className="influencer-avatar"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = "none";
-                        const parent = target.parentElement;
-                        if (parent && !parent.querySelector(".avatar-fallback")) {
-                          const fb = document.createElement("div");
-                          fb.className = "avatar-fallback";
-                          fb.textContent = getInitials(influencer.name);
-                          parent.insertBefore(fb, parent.firstChild);
-                        }
-                      }}
+                    <InfluencerAvatar 
+                      name={influencer.name}
+                      image={influencer.image}
+                      priority={true}
                     />
                     <div>
                       <h3 className="influencer-name">{influencer.name}</h3>
@@ -481,5 +564,13 @@ export default function Home() {
         </div>
       </footer>
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div className="container"><header><h1>123<span>READS</span></h1></header><main><div className="loading-spinner" /></main></div>}>
+      <HomeContent />
+    </Suspense>
   );
 }

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function ListsPage() {
   return (
     <ListsIndexPage
-      influencers={influencers.map(i => ({ name: i.name, slug: i.slug, bio: i.bio, image: i.image, bookCount: i.books.length }))}
+      influencers={influencers.map(i => ({ name: i.name, slug: i.slug, bio: i.bio, image: i.image, category: i.category, bookCount: i.books.length }))}
       thematicLists={thematicLists.map(t => ({ title: t.title, slug: t.slug, description: t.description, image: t.image, category: t.category, bookCount: t.books.length }))}
     />
   );
