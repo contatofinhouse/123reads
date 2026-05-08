@@ -57,6 +57,16 @@ interface BookOfDay {
   reason: string;
 }
 
+function getMockVotes(isbn?: string) {
+  if (!isbn) return 0;
+  let hash = 0;
+  for (let i = 0; i < isbn.length; i++) {
+    hash = (hash << 5) - hash + isbn.charCodeAt(i);
+    hash |= 0;
+  }
+  return Math.abs(hash % 45) + 5;
+}
+
 function HomeContent() {
   const [prompt, setPrompt] = useState("");
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
@@ -263,6 +273,7 @@ function HomeContent() {
         </Link>
         <nav className="header-nav">
           <Link href="/lists">Lists</Link>
+          <Link href="/hunt" style={{ color: "var(--accent-color)" }}>Hunt ⚡</Link>
           <Link href="/guides/kindle">Kindle Guide</Link>
           <button className="shelf-toggle" onClick={() => setShowShelf(!showShelf)}>
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -577,6 +588,31 @@ function HomeContent() {
             </Link>
           </div>
         </section>
+
+        {/* 123reads Hunt Section */}
+        <section className="trending-hunt" style={{ marginTop: "4rem", marginBottom: "4rem" }}>
+          <div className="section-header-row">
+            <h2 className="section-title">Trending on 123reads Hunt ⚡</h2>
+            <Link href="/hunt" className="view-all-link" style={{ padding: "0.5rem 1rem", fontSize: "0.75rem" }}>
+              Join the Hunt &rarr;
+            </Link>
+          </div>
+          <div className="hunt-preview-list">
+             {influencers.slice(0, 1).flatMap(i => i.books).slice(0, 3).map((book, idx) => (
+               <div key={book.isbn} className="hunt-mini-card">
+                 <div className="hunt-rank">#{idx + 1}</div>
+                 <div className="hunt-mini-info">
+                   <strong>{book.title}</strong>
+                   <span>{book.author}</span>
+                 </div>
+                 <div className="hunt-mini-votes">
+                   ▲ {getMockVotes(book.isbn)}
+                 </div>
+               </div>
+             ))}
+          </div>
+        </section>
+
         {/* Competitive SEO Section: Why 123reads? */}
         <section className="vs-goodreads-new" style={{ marginTop: "6rem", marginBottom: "6rem" }}>
           <div className="section-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "3rem", flexWrap: "wrap", gap: "1rem" }}>

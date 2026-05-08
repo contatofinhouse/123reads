@@ -1526,3 +1526,268 @@ button:disabled {
   border-radius: 50%;
   z-index: 1;
 }
+
+/* 123reads Hunt Styles */
+.hunt-hero {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2rem 0;
+}
+
+.hunt-title {
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.hunt-subtitle {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.hunt-filters {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.hunt-badge-live {
+  background: #000;
+  color: #fff;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 900;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.hunt-badge-live::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: #ff0000;
+  border-radius: 50%;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.5; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.hunt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.hunt-card {
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 2px solid var(--text-primary);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--card-shadow);
+  transition: all 0.2s ease;
+  gap: 1.5rem;
+}
+
+.hunt-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.hunt-rank {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #ddd;
+  min-width: 40px;
+}
+
+.hunt-book-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.hunt-book-cover {
+  width: 60px;
+  height: 90px;
+  flex-shrink: 0;
+  border: 1px solid #eee;
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.05);
+}
+
+.hunt-details h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin-bottom: 0.2rem;
+}
+
+.hunt-details p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.hunt-tag {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  background: #fff0f0;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.hunt-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.vote-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.vote-btn {
+  background: white;
+  border: 2px solid #eee;
+  border-radius: 8px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 50px;
+}
+
+.vote-btn:hover:not(:disabled) {
+  border-color: var(--text-primary);
+  background: #f9f9f9;
+}
+
+.vote-btn.up {
+  border-color: #eee;
+}
+
+.vote-btn.up:hover:not(:disabled) {
+  border-color: #4caf50;
+  background: #f1f8e9;
+  color: #2e7d32;
+}
+
+.vote-icon {
+  font-size: 0.8rem;
+}
+
+.vote-count {
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.amazon-btn-hunt {
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  border-bottom: 2px solid var(--accent-color);
+  padding-bottom: 2px;
+}
+
+.hunt-message {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-weight: 800;
+  z-index: 1000;
+  animation: slideIn 0.3s ease-out;
+  border: 2px solid #121212;
+  box-shadow: 4px 4px 0px #121212;
+}
+
+.hunt-message.success { background: #4caf50; color: white; }
+.hunt-message.error { background: #f44336; color: white; }
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@media (max-width: 640px) {
+  .hunt-card {
+    flex-direction: column;
+    text-align: center;
+  }
+  .hunt-rank { display: none; }
+  .hunt-book-info { flex-direction: column; }
+  .hunt-actions { width: 100%; justify-content: space-between; }
+}
+
+/* Mini Hunt Cards for Home */
+.hunt-preview-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.hunt-mini-card {
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 2px solid var(--text-primary);
+  border-radius: 12px;
+  padding: 0.75rem 1.25rem;
+  gap: 1rem;
+  transition: all 0.2s ease;
+}
+
+.hunt-mini-card:hover {
+  transform: translateX(4px);
+  box-shadow: 4px 4px 0px var(--text-primary);
+}
+
+.hunt-mini-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.hunt-mini-info strong {
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.hunt-mini-info span {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.hunt-mini-votes {
+  font-weight: 900;
+  font-size: 0.9rem;
+  color: var(--accent-color);
+  background: #fff0f0;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+}
+
