@@ -235,15 +235,35 @@ function HomeContent() {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "url": "https://123reads.com",
+    "name": "123reads",
+    "description": "Impartial AI Book Recommendations",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://123reads.com/?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  };
+
   return (
     <div className="container">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <header>
         <Link href="/" style={{ textDecoration: "none", color: "inherit" }}>
           <h1>123<span>READS</span></h1>
         </Link>
         <nav className="header-nav">
           <Link href="/lists">Lists</Link>
-          <Link href="/insights">Insights</Link>
+          <Link href="/guides/kindle">Kindle Guide</Link>
           <button className="shelf-toggle" onClick={() => setShowShelf(!showShelf)}>
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path>
@@ -281,8 +301,11 @@ function HomeContent() {
       <main>
         {/* Hero Subtitle */}
         <section className="site-hero">
-          <p className="site-subtitle">AI-Powered Book Recommendations</p>
+          <p className="site-subtitle">Like Goodreads. But better. And impartial.</p>
           <h2 className="site-headline">Discover your next great read<br />from 20 world-class minds</h2>
+          <p className="hero-description" style={{ color: "var(--text-secondary)", maxWidth: "600px", margin: "1rem auto", fontSize: "1.1rem", lineHeight: "1.6" }}>
+            The un-Amazon alternative. AI-powered recommendations based on quality, not sales algorithms.
+          </p>
         </section>
 
         {/* TOP LEVEL: AI Search Section */}
@@ -378,6 +401,7 @@ function HomeContent() {
               <button key={qp} className="quick-chip" onClick={() => handleQuickPrompt(qp)} disabled={loading}>{qp}</button>
             ))}
           </div>
+
 
           {/* Spacer anchor to clear sticky header */}
           <div ref={resultsRef} style={{ scrollMarginTop: "120px" }} />
@@ -553,13 +577,68 @@ function HomeContent() {
             </Link>
           </div>
         </section>
+        {/* Competitive SEO Section: Why 123reads? */}
+        <section className="vs-goodreads-new" style={{ marginTop: "6rem", marginBottom: "6rem" }}>
+          <div className="section-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "3rem", flexWrap: "wrap", gap: "1rem" }}>
+            <div style={{ maxWidth: "700px" }}>
+              <h2 style={{ fontSize: "3rem", fontWeight: 900, marginBottom: "1rem" }}>The Impartial Alternative</h2>
+              <p style={{ color: "#555", fontSize: "1.2rem" }}>Why readers are switching from Amazon-owned platforms to 123reads.</p>
+            </div>
+            <Link href="/lists" className="primary" style={{ padding: "1rem 2.5rem", borderRadius: "99px", background: "var(--accent-color)", color: "white", textDecoration: "none", fontWeight: 800, whiteSpace: "nowrap" }}>
+              Explore Lists
+            </Link>
+          </div>
+          
+          <div className="bento-grid">
+            {/* Left Large Card: Impartiality */}
+            <div className="bento-card">
+              <img src="/images/mascot-researcher.png" alt="Impartiality Mascot" className="bento-image-large" />
+              <div>
+                <h3 style={{ fontSize: "2rem", fontWeight: 900, marginBottom: "1rem" }}>We provide vetted engineers... of books.</h3>
+                <p style={{ fontSize: "1.1rem", lineHeight: "1.6", color: "#444" }}>
+                  Goodreads is owned by Amazon. Their goal is to sell you more books. Our goal is to find you the <strong>right</strong> book, using AI trained on curated lists from world-class thinkers.
+                </p>
+              </div>
+            </div>
+            
+            {/* Right Column with two stacked cards */}
+            <div style={{ display: "grid", gridTemplateRows: "1fr 1fr", gap: "2rem" }}>
+              {/* Top Small Card: AI Precision */}
+              <div className="bento-card bento-card-small">
+                <div className="bento-mascot-wrapper bento-mascot-precision">
+                  <img src="/images/mascot-researcher.png" alt="AI Precision Mascot" className="bento-image-small" />
+                </div>
+                <div>
+                  <h3 style={{ fontSize: "1.5rem", fontWeight: 900, marginBottom: "0.5rem" }}>AI Precision</h3>
+                  <p style={{ fontSize: "0.95rem", lineHeight: "1.5", color: "#444" }}>
+                    Stop scrolling through thousands of 3-star reviews. Our AI understands your mood and context to deliver surgical recommendations.
+                  </p>
+                </div>
+              </div>
+              
+              {/* Bottom Small Card: Curated Signal */}
+              <div className="bento-card bento-card-small">
+                <div className="bento-mascot-wrapper bento-mascot-signal">
+                  <img src="/images/mascot-researcher.png" alt="Curated Signal Mascot" className="bento-image-small" />
+                </div>
+                <div>
+                  <h3 style={{ fontSize: "1.5rem", fontWeight: 900, marginBottom: "0.5rem" }}>Curated Signal</h3>
+                  <p style={{ fontSize: "0.95rem", lineHeight: "1.5", color: "#444" }}>
+                    We focus on &quot;high-signal&quot; books recommended by people like Bill Gates, Naval Ravikant, and top authors. Signal over noise.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
       <footer>
-        <p>&copy; {new Date().getFullYear()} 123reads. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} 123reads. All rights reserved. 123reads is the impartial alternative to Goodreads.</p>
         <div className="footer-links">
           <Link href="/lists">All Lists</Link>
-          <Link href="/insights">Insights</Link>
+          <Link href="/lists/nyt-best-sellers">NYT Best Sellers</Link>
+          <Link href="/guides/kindle">Kindle Buying Guide</Link>
           <Link href="/affiliate-disclosure">Affiliate Disclosure</Link>
         </div>
       </footer>

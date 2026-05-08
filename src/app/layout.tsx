@@ -3,19 +3,22 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://123reads.app"),
+  metadataBase: new URL("https://123reads.com"),
   title: {
-    default: "123reads | AI Book Recommendations",
+    default: "123reads | Impartial AI Book Recommendations (Goodreads Alternative)",
     template: "%s | 123reads",
   },
-  description: "Ready for your next obsession? 📚 Let AI find the perfect book for you. Curated by the world's sharpest minds. Stop searching, start reading.",
-  keywords: ["book recommendations", "AI books", "reading list", "best books", "Bill Gates books", "Elon Musk books"],
+  description: "The impartial alternative to Goodreads. 📚 Use AI to find your next favorite book based on curated lists from world-class minds, not just Amazon algorithms.",
+  keywords: ["book recommendations", "AI books", "reading list", "best books", "Goodreads alternative", "unbiased book reviews", "Bill Gates books", "Elon Musk books"],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
     siteName: "123reads",
-    title: "123reads | Find Your Next Favorite Book with AI",
-    description: "Ready for your next obsession? 📚 Let AI find the perfect book for you. Curated by the world's sharpest minds. Stop searching, start reading.",
+    title: "123reads | Better & Impartial Book Recommendations",
+    description: "Ready for your next obsession? 📚 Like Goodreads, but impartial. AI-powered recommendations curated by the world's sharpest minds.",
     images: [
       {
         url: "/images/og-image.png",
@@ -27,8 +30,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "123reads | Find Your Next Favorite Book with AI",
-    description: "Ready for your next obsession? 📚 Let AI find the perfect book for you. Curated by the world's sharpest minds. Stop searching, start reading.",
+    title: "123reads | Better & Impartial Book Recommendations",
+    description: "The impartial alternative to Goodreads. 📚 AI-powered book recommendations curated by the world's sharpest minds.",
     images: ["/images/og-image.png"],
   },
   robots: {

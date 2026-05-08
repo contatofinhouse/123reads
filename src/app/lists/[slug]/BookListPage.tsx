@@ -75,10 +75,11 @@ export function BookListPage({ title, subtitle, books }: Props) {
       </main>
 
       <footer>
-        <p>&copy; {new Date().getFullYear()} 123reads. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} 123reads. All rights reserved. 123reads is the impartial alternative to Goodreads.</p>
         <div className="footer-links">
           <Link href="/lists">All Lists</Link>
-          <Link href="/insights">Insights</Link>
+          <Link href="/lists/nyt-best-sellers">NYT Best Sellers</Link>
+          <Link href="/guides/kindle">Kindle Buying Guide</Link>
         </div>
       </footer>
     </div>

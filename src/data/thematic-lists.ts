@@ -195,5 +195,47 @@ export const thematicLists: ThematicList[] = [
       { title: "Pachinko", author: "Min Jin Lee", isbn: "9781455563920" },
       { title: "The Art of War", author: "Sun Tzu", isbn: "9781590302255" }
     ]
+  },
+  {
+    title: "NYT Best Sellers (Fiction)",
+    slug: "nyt-best-sellers-fiction",
+    description: "The current top-selling fiction books as ranked by the New York Times.",
+    image: "/images/theme-nyt.png",
+    category: "Current Rankings",
+    books: [
+      { title: "Hope Rises", author: "David Baldacci", isbn: "9781538750438" },
+      { title: "The Correspondent", author: "Virginia Evans", isbn: "9780593441275" },
+      { title: "Yesteryear", author: "Caro Claire Burke", isbn: "9781538740125" },
+      { title: "Rites of the Starling", author: "Devney Perry", isbn: "9781951590215" },
+      { title: "Starside", author: "Alex Aster", isbn: "9781419760884" }
+    ]
+  },
+  {
+    title: "Best Books for Productivity",
+    slug: "best-books-productivity",
+    description: "Master your time and focus with these essential productivity reads.",
+    image: "/images/theme-productivity.png",
+    category: "Non-Fiction & Growth",
+    books: [
+      { title: "Atomic Habits", author: "James Clear", isbn: "9780735211292" },
+      { title: "Deep Work", author: "Cal Newport", isbn: "9781455586691" },
+      { title: "Getting Things Done", author: "David Allen", isbn: "9780143126560" },
+      { title: "The 4-Hour Workweek", author: "Tim Ferriss", isbn: "9780307465351" },
+      { title: "Essentialism", author: "Greg McKeown", isbn: "9780804137386" }
+    ]
+  },
+  {
+    title: "Inspirational Biographies",
+    slug: "inspirational-biographies",
+    description: "Life stories of incredible individuals that will inspire and motivate you.",
+    image: "/images/theme-biographies.png",
+    category: "Non-Fiction & Growth",
+    books: [
+      { title: "Steve Jobs", author: "Walter Isaacson", isbn: "9781451648539" },
+      { title: "Elon Musk", author: "Ashlee Vance", isbn: "9780062301239" },
+      { title: "Becoming", author: "Michelle Obama", isbn: "9781524763138" },
+      { title: "Shoe Dog", author: "Phil Knight", isbn: "9781501135910" },
+      { title: "The Autobiography of Malcolm X", author: "Malcolm X", isbn: "9780345350688" }
+    ]
   }
 ];
