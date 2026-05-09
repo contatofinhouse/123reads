@@ -1628,6 +1628,13 @@ button:disabled {
   flex-shrink: 0;
   border: 1px solid #eee;
   box-shadow: 4px 4px 0px rgba(0,0,0,0.05);
+  overflow: hidden; /* Ensure image doesn't bleed out */
+}
+
+.book-cover-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
 }
 
 .hunt-details h3 {
@@ -1735,12 +1742,76 @@ button:disabled {
 
 @media (max-width: 640px) {
   .hunt-card {
-    flex-direction: column;
-    text-align: center;
+    padding: 0.75rem;
+    gap: 0.5rem;
+    border-radius: 12px;
+    align-items: center;
+    min-height: 80px;
   }
-  .hunt-rank { display: none; }
-  .hunt-book-info { flex-direction: column; }
-  .hunt-actions { width: 100%; justify-content: space-between; }
+  .hunt-rank { 
+    font-size: 0.9rem;
+    min-width: 20px;
+    color: #ccc;
+  }
+  .hunt-book-info { 
+    gap: 0.5rem;
+    min-width: 0;
+  }
+  .hunt-book-cover {
+    width: 40px;
+    height: 60px;
+  }
+  .hunt-details {
+    min-width: 0;
+    flex: 1;
+  }
+  .hunt-details h3 {
+    font-size: 0.8rem;
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+  }
+  .hunt-details p {
+    font-size: 0.7rem;
+    margin-bottom: 0.1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .hunt-tag {
+    font-size: 0.55rem;
+    padding: 0.1rem 0.3rem;
+    display: inline-block;
+  }
+  .hunt-actions {
+    gap: 0.4rem;
+  }
+  .vote-controls {
+    flex-direction: row;
+    gap: 0.2rem;
+  }
+  .vote-btn {
+    padding: 0.25rem 0.4rem;
+    min-width: 35px;
+    border-radius: 6px;
+    flex-direction: row;
+    gap: 0.15rem;
+  }
+  .vote-count {
+    font-size: 0.7rem;
+  }
+  .vote-icon {
+    font-size: 0.6rem;
+  }
+  .amazon-btn-hunt {
+    font-size: 0.6rem;
+    padding-bottom: 1px;
+    white-space: nowrap;
+  }
 }
 
 /* Mini Hunt Cards for Home */
