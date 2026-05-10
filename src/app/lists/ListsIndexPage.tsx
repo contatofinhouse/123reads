@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
 import { InfluencerAvatar } from "@/components/InfluencerAvatar";
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
 
 interface InfluencerSummary {
   name: string;
@@ -46,15 +48,7 @@ export function ListsIndexPage({ influencers, thematicLists }: Props) {
 
   return (
     <div className="container">
-      <header>
-        <Link href="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <h1>123<span>READS</span></h1>
-        </Link>
-        <nav className="header-nav">
-          <Link href="/">Home</Link>
-          <Link href="/insights">Insights</Link>
-        </nav>
-      </header>
+      <Header />
 
       <main>
         <div className="page-header-row">
@@ -132,13 +126,7 @@ export function ListsIndexPage({ influencers, thematicLists }: Props) {
         )}
       </main>
 
-      <footer>
-        <p>&copy; {new Date().getFullYear()} 123reads. All rights reserved.</p>
-        <div className="footer-links">
-          <Link href="/">Home</Link>
-          <Link href="/insights">Insights</Link>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

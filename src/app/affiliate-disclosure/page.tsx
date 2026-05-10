@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "Affiliate Disclosure",
@@ -9,11 +11,7 @@ export const metadata: Metadata = {
 export default function AffiliateDisclosure() {
   return (
     <div className="container">
-      <header>
-        <Link href="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <h1>123<span>READS</span></h1>
-        </Link>
-      </header>
+      <Header />
 
       <main>
         <div className="list-page-header">
@@ -66,14 +64,7 @@ export default function AffiliateDisclosure() {
         </div>
       </main>
 
-      <footer>
-        <p>&copy; {new Date().getFullYear()} 123reads. All rights reserved.</p>
-        <div className="footer-links">
-          <Link href="/">Home</Link>
-          <Link href="/lists">All Lists</Link>
-          <Link href="/insights">Insights</Link>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

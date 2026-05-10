@@ -5,9 +5,9 @@ export function getAmazonLink(title: string, author: string): string {
   return `https://www.amazon.com/s?k=${query}&tag=${AMAZON_AFFILIATE_TAG}`;
 }
 
-export function getCoverUrl(isbn?: string): string {
+export function getCoverUrl(isbn?: string, size: 'S' | 'M' | 'L' = 'M'): string {
   if (isbn) {
-    return `https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg?default=false`;
+    return `https://covers.openlibrary.org/b/isbn/${isbn}-${size}.jpg?default=false`;
   }
   return "";
 }

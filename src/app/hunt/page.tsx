@@ -3,7 +3,10 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { getCoverUrl, getAmazonLink } from "@/lib/amazon";
-import Image from "next/image";
+import { BookImage } from "@/components/BookImage";
+import { DynamicDescription } from "@/components/DynamicDescription";
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
 
 interface HuntBook {
   isbn: string;
@@ -12,6 +15,7 @@ interface HuntBook {
   category: string;
   upvotes: number;
   downvotes: number;
+  description?: string;
 }
 
 const CATEGORIES = ["All", "Business", "Tech", "Science", "Culture", "Lifestyle", "Authors"];
@@ -79,15 +83,7 @@ export default function HuntPage() {
 
   return (
     <div className="container">
-      <header>
-        <Link href="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <h1>123<span>READS</span></h1>
-        </Link>
-        <nav className="header-nav">
-          <Link href="/">Back Home</Link>
-          <div className="hunt-badge-live">LIVE HUNT</div>
-        </nav>
-      </header>
+      <Header />
 
       <main>
         <div className="hunt-hero">
@@ -140,8 +136,8 @@ export default function HuntPage() {
                 <div className="hunt-rank">#{idx + 1}</div>
                 <div className="hunt-book-info">
                   <div className="hunt-book-cover">
-                     <Image 
-                        src={getCoverUrl(book.isbn)} 
+                     <BookImage 
+                        src={getCoverUrl(book.isbn, 'S')} 
                         alt={book.title} 
                         width={60}
                         height={90}
@@ -151,40 +147,35 @@ export default function HuntPage() {
                   <div className="hunt-details">
                     <h3>{book.title}</h3>
                     <p>by {book.author}</p>
+                    <DynamicDescription 
+                      isbn={book.isbn} 
+                      fallback={book.description || "A world-class recommendation featured on 123reads. Impartial and curated by leading minds."} 
+                    />
                     <span className="hunt-tag">{book.category}</span>
                   </div>
                 </div>
-                <div className="hunt-actions">
-                  <div className="vote-controls">
-                    <button 
-                      className="vote-btn up" 
-                      onClick={() => handleVote(book, 'up')}
-                      disabled={!!votingId}
-                    >
-                      <span className="vote-icon">▲</span>
-                      <span className="vote-count">{book.upvotes}</span>
-                    </button>
-                    <button 
-                      className="vote-btn down" 
-                      onClick={() => handleVote(book, 'down')}
-                      disabled={!!votingId}
-                    >
-                      <span className="vote-icon">▼</span>
-                    </button>
+                  <div className="hunt-actions">
+                    <div className="vote-controls">
+                      <button 
+                        className="vote-btn up" 
+                        onClick={() => handleVote(book, 'up')}
+                        disabled={!!votingId}
+                      >
+                        <span className="vote-icon">▲</span>
+                        <span className="vote-count">{book.upvotes}</span>
+                      </button>
+                    </div>
+                    <a href={getAmazonLink(book.title, book.author)} target="_blank" rel="noopener noreferrer" className="amazon-btn">
+                      Buy &rarr;
+                    </a>
                   </div>
-                  <a href={getAmazonLink(book.title, book.author)} target="_blank" rel="noopener noreferrer" className="amazon-btn-hunt">
-                    Buy &rarr;
-                  </a>
-                </div>
               </div>
             ))
           )}
         </div>
       </main>
 
-      <footer style={{ marginTop: "4rem", textAlign: "center", color: "var(--text-secondary)" }}>
-        <p>&copy; {new Date().getFullYear()} 123reads Hunt. Signal over noise.</p>
-      </footer>
+      <Footer />
     </div>
   );
 }

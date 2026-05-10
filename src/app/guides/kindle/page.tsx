@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "Kindle Buying Guide 2026: Which E-Reader is Best for You?",
@@ -12,11 +14,7 @@ export const metadata: Metadata = {
 export default function KindleGuidePage() {
   return (
     <div className="container">
-      <header>
-        <Link href="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <h1>123<span>READS</span></h1>
-        </Link>
-      </header>
+      <Header />
 
       <main>
         <div className="list-page-header" style={{ textAlign: "center", marginBottom: "4rem" }}>
@@ -80,10 +78,13 @@ export default function KindleGuidePage() {
         </section>
 
         <section className="guide-section">
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3rem", alignItems: "start" }}>
-            <div>
-              <h2 style={{ fontSize: "1.8rem" }}>1. Kindle Paperwhite</h2>
-              <p style={{ fontWeight: 700, color: "var(--accent-color)" }}>Best for Most People</p>
+          <div className="guide-grid">
+            <div className="guide-image-container">
+              <img src="/images/kindle-paperwhite.png" alt="Kindle Paperwhite" />
+            </div>
+            <div className="guide-content">
+              <h2>1. Kindle Paperwhite</h2>
+              <p className="guide-highlight">Best for Most People</p>
               <p>
                 The Paperwhite remains the sweet spot in the lineup. With its larger 6.8-inch display, adjustable warm light for nighttime reading, and waterproof design, it's the most versatile e-reader on the market.
               </p>
@@ -103,24 +104,56 @@ export default function KindleGuidePage() {
                   </ul>
                 </div>
               </div>
-              <a href="https://amzn.to/3UEp8z0" target="_blank" rel="noopener noreferrer" className="primary" style={{ textDecoration: "none", display: "inline-block", padding: "1rem 2rem", borderRadius: "99px", background: "var(--accent-color)", color: "white", fontWeight: 800 }}>
+              <a href="https://amzn.to/3UEp8z0" target="_blank" rel="noopener noreferrer" className="amazon-btn">
                 Check Price on Amazon
               </a>
-            </div>
-            <div style={{ background: "#f0f0f0", borderRadius: "20px", height: "400px", overflow: "hidden", border: "2px solid var(--text-primary)" }}>
-              <img src="/images/kindle-paperwhite.png" alt="Kindle Paperwhite" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             </div>
           </div>
         </section>
 
-        <section className="guide-section" style={{ marginTop: "6rem" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3rem", alignItems: "start" }}>
-            <div style={{ background: "#f0f0f0", borderRadius: "20px", height: "400px", overflow: "hidden", border: "2px solid var(--text-primary)", order: 2 }}>
-              <img src="/images/kindle-basic.png" alt="Kindle Basic" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        <section className="guide-section">
+          <div className="guide-grid reverse">
+            <div className="guide-image-container">
+              <img src="/images/kindle-scribe.png" alt="Kindle Scribe" />
             </div>
-            <div style={{ order: 1 }}>
-              <h2 style={{ fontSize: "1.8rem" }}>2. Kindle (2022 Release)</h2>
-              <p style={{ fontWeight: 700, color: "var(--text-secondary)" }}>Best for Portability & Budget</p>
+            <div className="guide-content">
+              <h2>2. Kindle Scribe</h2>
+              <p className="guide-highlight scribe">Best for Notes & Deep Work</p>
+              <p>
+                The Kindle Scribe is the largest Kindle ever, featuring a massive 10.2-inch display. But it's not just for reading; the included stylus allows you to write directly on the screen, making it perfect for students and professionals who want to annotate PDFs or keep a digital journal.
+              </p>
+              <div className="pros-cons">
+                <div className="pros-box">
+                  <h4>Pros</h4>
+                  <ul>
+                    <li>Largest, crispest display</li>
+                    <li>Incredible writing feel</li>
+                    <li>Longest battery life</li>
+                  </ul>
+                </div>
+                <div className="cons-box">
+                  <h4>Cons</h4>
+                  <ul>
+                    <li>Not waterproof</li>
+                    <li>Largest footprint</li>
+                  </ul>
+                </div>
+              </div>
+              <a href="https://amzn.to/3UEp8z0" target="_blank" rel="noopener noreferrer" className="amazon-btn">
+                Check Price on Amazon
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section className="guide-section">
+          <div className="guide-grid">
+            <div className="guide-image-container">
+              <img src="/images/kindle-basic.png" alt="Kindle Basic" />
+            </div>
+            <div className="guide-content">
+              <h2>3. Kindle (2022 Release)</h2>
+              <p className="guide-highlight budget">Best for Portability & Budget</p>
               <p>
                 Don't let the "Basic" tag fool you. The entry-level Kindle now features a 300 ppi high-resolution screen, USB-C charging, and double the storage of previous generations. It's incredibly light and fits in most pockets.
               </p>
@@ -141,7 +174,7 @@ export default function KindleGuidePage() {
                   </ul>
                 </div>
               </div>
-              <a href="https://amzn.to/3UEp8z0" target="_blank" rel="noopener noreferrer" className="secondary" style={{ textDecoration: "none", display: "inline-block", padding: "1rem 2rem", borderRadius: "99px", border: "2px solid var(--text-primary)", color: "var(--text-primary)", fontWeight: 800 }}>
+              <a href="https://amzn.to/3UEp8z0" target="_blank" rel="noopener noreferrer" className="amazon-btn">
                 Check Price on Amazon
               </a>
             </div>
@@ -157,14 +190,7 @@ export default function KindleGuidePage() {
         </div>
       </main>
 
-      <footer>
-        <p>&copy; {new Date().getFullYear()} 123reads. All rights reserved.</p>
-        <div className="footer-links">
-          <Link href="/lists">All Lists</Link>
-          <Link href="/insights">Insights</Link>
-          <Link href="/affiliate-disclosure">Affiliate Disclosure</Link>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

@@ -6,9 +6,14 @@ import { influencers, type Influencer } from "@/data/influencers";
 import { getAmazonLink, getCoverUrl } from "@/lib/amazon";
 import { StarRating } from "@/components/StarRating";
 import { MoodIcon } from "@/components/MoodIcon";
+import { DynamicDescription } from "@/components/DynamicDescription";
 import Link from "next/link";
 import Image from "next/image";
 import { InfluencerAvatar } from "@/components/InfluencerAvatar";
+import { BookImage } from "@/components/BookImage";
+import { QuotesSection } from "@/components/QuotesSection";
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
 
 const AGE_FILTERS = ["Children", "Teens", "Young Adult", "Adult"];
 const GENRE_FILTERS = ["Fiction", "Non-fiction", "Sci-Fi", "Fantasy", "Business", "Self-Help", "History"];
@@ -78,28 +83,29 @@ function HomeContent() {
   const [showShelf, setShowShelf] = useState(false);
   const [copiedId, setCopiedId] = useState<number | null>(null);
   const [activeInfluencerCategory, setActiveInfluencerCategory] = useState("All");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const INFLUENCER_CATEGORIES = ["All", "Tech", "Business", "Authors", "Science", "Culture", "Lifestyle"];
-  
-  const filteredInfluencers = activeInfluencerCategory === "All" 
-    ? influencers 
+
+  const filteredInfluencers = activeInfluencerCategory === "All"
+    ? influencers
     : influencers.filter(i => i.category === activeInfluencerCategory);
-  
+
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  
+
   // UX Features
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
   const [placeholderText, setPlaceholderText] = useState("");
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
-  
+
   const resultsRef = useRef<HTMLDivElement>(null);
 
   // Typewriter effect
   useEffect(() => {
     let timeout: NodeJS.Timeout;
-    
+
     if (isTyping) {
       if (placeholderText.length < TYPEWRITER_PHRASES[phraseIndex].length) {
         timeout = setTimeout(() => {
@@ -126,11 +132,11 @@ function HomeContent() {
     fetch("/api/book-of-the-day")
       .then(res => res.json())
       .then(data => setBookOfDay(data))
-      .catch(() => {});
+      .catch(() => { });
     try {
       const saved = localStorage.getItem("123reads-shelf");
       if (saved) setShelf(JSON.parse(saved));
-    } catch {}
+    } catch { }
 
     // Handle initial search from URL
     const q = searchParams.get("q");
@@ -221,14 +227,14 @@ function HomeContent() {
   const handleShare = (e: React.MouseEvent, idx: number) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     const searchUrl = new URL(window.location.origin);
     if (prompt) {
       searchUrl.searchParams.set("q", prompt);
     }
-    
+
     const shareText = `Check out this book recommendation for "${prompt || "books"}" on 123reads! 📚\n\n${searchUrl.toString()}`;
-    
+
     if (navigator.share) {
       navigator.share({
         title: '123reads Recommendation',
@@ -240,7 +246,7 @@ function HomeContent() {
     } else {
       navigator.clipboard.writeText(shareText);
     }
-    
+
     setCopiedId(idx);
     setTimeout(() => setCopiedId(null), 2000);
   };
@@ -267,22 +273,7 @@ function HomeContent() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <header>
-        <Link href="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <h1>123<span>READS</span></h1>
-        </Link>
-        <nav className="header-nav">
-          <Link href="/lists">Lists</Link>
-          <Link href="/hunt" style={{ color: "var(--accent-color)" }}>Hunt ⚡</Link>
-          <Link href="/guides/kindle">Kindle Guide</Link>
-          <button className="shelf-toggle" onClick={() => setShowShelf(!showShelf)}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path>
-            </svg>
-            My Shelf {shelf.length > 0 && <span className="shelf-badge">{shelf.length}</span>}
-          </button>
-        </nav>
-      </header>
+      <Header />
 
       {/* My Shelf Panel */}
       {showShelf && (
@@ -312,8 +303,8 @@ function HomeContent() {
       <main>
         {/* Hero Subtitle */}
         <section className="site-hero">
-          <p className="site-subtitle">Like Goodreads. But better. And impartial.</p>
-          <h2 className="site-headline">Discover your next great read<br />from 20 world-class minds</h2>
+          <p className="site-subtitle">Like Goodreads. But better.</p>
+          <h2 className="site-headline">Discover your next<br /> great read</h2>
           <p className="hero-description" style={{ color: "var(--text-secondary)", maxWidth: "600px", margin: "1rem auto", fontSize: "1.1rem", lineHeight: "1.6" }}>
             The un-Amazon alternative. AI-powered recommendations based on quality, not sales algorithms.
           </p>
@@ -345,8 +336,8 @@ function HomeContent() {
 
           {recommendations.length > 0 && !loading && (
             <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "1rem" }}>
-              <button 
-                className="secondary" 
+              <button
+                className="secondary"
                 onClick={(e) => handleShare(e, -1)}
                 style={{ fontSize: "0.8rem", padding: "0.4rem 0.8rem", display: "flex", alignItems: "center", gap: "0.5rem" }}
               >
@@ -358,7 +349,7 @@ function HomeContent() {
 
           {/* Progressive Disclosure for Filters */}
           <div style={{ marginBottom: "1.5rem" }}>
-            <button 
+            <button
               onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
               style={{
                 background: "transparent",
@@ -374,7 +365,7 @@ function HomeContent() {
             >
               {showAdvancedFilters ? "▲ Hide Advanced Filters" : "⚙️ Show Advanced Filters"}
             </button>
-            
+
             {showAdvancedFilters && (
               <div className="filters-section" style={{ marginTop: "1rem" }}>
                 <div className="filter-group-title">Age Group</div>
@@ -444,33 +435,22 @@ function HomeContent() {
                   <a href={getAmazonLink(rec.title, rec.author)} target="_blank" rel="noopener noreferrer" className="recommendation-result-link">
                     <div className="recommendation-result">
                       <div className="book-cover-container">
-                        <Image 
-                          src={getCoverUrl(rec.isbn)} 
-                          alt={rec.title} 
+                        <BookImage
+                          src={getCoverUrl(rec.isbn)}
+                          alt={rec.title}
                           width={100}
                           height={150}
                           className="book-cover-img"
                           priority={idx < 4}
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.style.display = "none";
-                            const parent = target.parentElement;
-                            if (parent && !parent.querySelector(".book-mockup")) {
-                              const mockup = document.createElement("div");
-                              mockup.className = "book-mockup";
-                              mockup.innerHTML = `<div class="mockup-title">${rec.title}</div><div class="mockup-author">${rec.author}</div>`;
-                              parent.appendChild(mockup);
-                            }
-                          }}
                         />
                       </div>
                       <div className="result-content">
                         <h3>{rec.title}</h3>
                         <div className="author">by {rec.author}</div>
                         <StarRating rating={rec.rating} />
-                        <div className="reason">{rec.reason}</div>
-                        <div className="amazon-btn">Amazon &rarr;</div>
+                        {rec.reason && <div className="book-description-text">{rec.reason}</div>}
                       </div>
+                      <div className="amazon-btn">Buy &rarr;</div>
                     </div>
                   </a>
                   <div className="card-actions">
@@ -482,7 +462,13 @@ function HomeContent() {
                       {copiedId === idx ? (
                         <span style={{ fontSize: "0.7rem", color: "var(--accent-color)" }}>Copied!</span>
                       ) : (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m22 2-7 20-4-9-9-4Z"></path><path d="M22 2 11 13"></path></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="18" cy="5" r="3"></circle>
+                          <circle cx="6" cy="12" r="3"></circle>
+                          <circle cx="18" cy="19" r="3"></circle>
+                          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                        </svg>
                       )}
                     </button>
                     <button
@@ -515,23 +501,12 @@ function HomeContent() {
               <div className="botd-label">BOOK OF THE DAY</div>
               <div className="botd-content">
                 <div className="book-cover-container">
-                  <Image 
-                    src={getCoverUrl(bookOfDay.isbn)} 
-                    alt={bookOfDay.title} 
+                  <BookImage
+                    src={getCoverUrl(bookOfDay.isbn)}
+                    alt={bookOfDay.title}
                     width={100}
                     height={150}
                     className="book-cover-img"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = "none";
-                      const parent = target.parentElement;
-                      if (parent && !parent.querySelector(".book-mockup")) {
-                        const mockup = document.createElement("div");
-                        mockup.className = "book-mockup";
-                        mockup.innerHTML = `<div class="mockup-title">${bookOfDay.title}</div><div class="mockup-author">${bookOfDay.author}</div>`;
-                        parent.appendChild(mockup);
-                      }
-                    }}
                   />
                 </div>
                 <div>
@@ -549,8 +524,8 @@ function HomeContent() {
           <div className="section-header-row">
             <h2 className="section-title">Curated by Brilliant Minds</h2>
             <div className="filter-dropdown-container">
-              <select 
-                value={activeInfluencerCategory} 
+              <select
+                value={activeInfluencerCategory}
                 onChange={(e) => setActiveInfluencerCategory(e.target.value)}
                 className="category-select"
               >
@@ -567,7 +542,7 @@ function HomeContent() {
               <Link key={influencer.slug} href={`/lists/${influencer.slug}`} className="card-link">
                 <div className="influencer-card">
                   <div className="influencer-header">
-                    <InfluencerAvatar 
+                    <InfluencerAvatar
                       name={influencer.name}
                       image={influencer.image}
                       priority={true}
@@ -592,24 +567,37 @@ function HomeContent() {
         {/* 123reads Hunt Section */}
         <section className="trending-hunt" style={{ marginTop: "4rem", marginBottom: "4rem" }}>
           <div className="section-header-row">
-            <h2 className="section-title">Trending on 123reads Hunt ⚡</h2>
+            <h2 className="section-title">Trending on 123reads Hunt</h2>
             <Link href="/hunt" className="view-all-link" style={{ padding: "0.5rem 1rem", fontSize: "0.75rem" }}>
               Join the Hunt &rarr;
             </Link>
           </div>
           <div className="hunt-preview-list">
-             {influencers.slice(0, 1).flatMap(i => i.books).slice(0, 3).map((book, idx) => (
-               <div key={book.isbn} className="hunt-mini-card">
-                 <div className="hunt-rank">#{idx + 1}</div>
-                 <div className="hunt-mini-info">
-                   <strong>{book.title}</strong>
-                   <span>{book.author}</span>
-                 </div>
-                 <div className="hunt-mini-votes">
-                   ▲ {getMockVotes(book.isbn)}
-                 </div>
-               </div>
-             ))}
+            {influencers.slice(0, 1).flatMap(i => i.books).slice(0, 3).map((book, idx) => (
+              <div key={book.isbn} className="hunt-mini-card">
+                <div className="hunt-rank">#{idx + 1}</div>
+                <div style={{ width: "40px", height: "60px", flexShrink: 0, overflow: "hidden", borderRadius: "4px" }}>
+                  <BookImage
+                    src={getCoverUrl(book.isbn, 'S')}
+                    alt={book.title}
+                    width={40}
+                    height={60}
+                    className="book-cover-img"
+                  />
+                </div>
+                <div className="hunt-mini-info" style={{ flex: 1 }}>
+                  <strong style={{ display: "block", fontSize: "0.9rem" }}>{book.title}</strong>
+                  <span style={{ fontSize: "0.8rem", color: "var(--text-secondary)", display: "block", marginBottom: "0.25rem" }}>by {book.author}</span>
+                  <DynamicDescription 
+                    isbn={book.isbn} 
+                    fallback={book.description || "A world-class recommendation featured on 123reads."} 
+                  />
+                </div>
+                <div className="hunt-mini-votes">
+                  ▲ {getMockVotes(book.isbn)}
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -624,7 +612,7 @@ function HomeContent() {
               Explore Lists
             </Link>
           </div>
-          
+
           <div className="bento-grid">
             {/* Left Large Card: Impartiality */}
             <div className="bento-card">
@@ -636,7 +624,7 @@ function HomeContent() {
                 </p>
               </div>
             </div>
-            
+
             {/* Right Column with two stacked cards */}
             <div style={{ display: "grid", gridTemplateRows: "1fr 1fr", gap: "2rem" }}>
               {/* Top Small Card: AI Precision */}
@@ -651,7 +639,7 @@ function HomeContent() {
                   </p>
                 </div>
               </div>
-              
+
               {/* Bottom Small Card: Curated Signal */}
               <div className="bento-card bento-card-small">
                 <div className="bento-mascot-wrapper bento-mascot-signal">
@@ -667,24 +655,18 @@ function HomeContent() {
             </div>
           </div>
         </section>
+
+        <QuotesSection />
       </main>
 
-      <footer>
-        <p>&copy; {new Date().getFullYear()} 123reads. All rights reserved. 123reads is the impartial alternative to Goodreads.</p>
-        <div className="footer-links">
-          <Link href="/lists">All Lists</Link>
-          <Link href="/lists/nyt-best-sellers">NYT Best Sellers</Link>
-          <Link href="/guides/kindle">Kindle Buying Guide</Link>
-          <Link href="/affiliate-disclosure">Affiliate Disclosure</Link>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
 
 export default function Home() {
   return (
-    <Suspense fallback={<div className="container"><header><h1>123<span>READS</span></h1></header><main><div className="loading-spinner" /></main></div>}>
+    <Suspense fallback={<div className="container"><Header /><main><div className="loading-spinner" /></main></div>}>
       <HomeContent />
     </Suspense>
   );

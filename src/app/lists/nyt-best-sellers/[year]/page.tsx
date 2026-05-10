@@ -2,7 +2,10 @@ import { nytByYear } from "@/data/nyt-best-sellers";
 import { getAmazonLink, getCoverUrl } from "@/lib/amazon";
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
+import { BookImage } from "@/components/BookImage";
+import { DynamicDescription } from "@/components/DynamicDescription";
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
 import { notFound } from "next/navigation";
 
 interface PageProps {
@@ -95,7 +98,7 @@ export default async function NYTYearPage({ params }: PageProps) {
                 >
                   {book.rank}
                 </div>
-                <Image
+                <BookImage
                   src={getCoverUrl(book.isbn)}
                   alt={book.title}
                   width={100}
@@ -107,9 +110,13 @@ export default async function NYTYearPage({ params }: PageProps) {
               <div className="result-content">
                 <h3>{book.title}</h3>
                 <div className="author">by {book.author}</div>
-                <div className="amazon-btn" style={{ marginTop: "auto" }}>
-                  Amazon &rarr;
-                </div>
+                <DynamicDescription 
+                  isbn={book.isbn} 
+                  fallback={book.description || "A world-class recommendation featured on 123reads. Impartial and curated by leading minds."} 
+                />
+              </div>
+              <div className="amazon-btn" style={{ marginTop: "0" }}>
+                Buy &rarr;
               </div>
             </div>
           </a>
@@ -130,13 +137,7 @@ export default async function NYTYearPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <header>
-        <Link href="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <h1>
-            123<span>READS</span>
-          </h1>
-        </Link>
-      </header>
+      <Header />
 
       <main>
         <div
@@ -247,18 +248,7 @@ export default async function NYTYearPage({ params }: PageProps) {
         </div>
       </main>
 
-      <footer>
-        <p>
-          &copy; {new Date().getFullYear()} 123reads. All rights reserved.
-          123reads is the impartial alternative to Goodreads.
-        </p>
-        <div className="footer-links">
-          <Link href="/lists">All Lists</Link>
-          <Link href="/lists/nyt-best-sellers">NYT Best Sellers</Link>
-          <Link href="/guides/kindle">Kindle Guide</Link>
-          <Link href="/affiliate-disclosure">Affiliate Disclosure</Link>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

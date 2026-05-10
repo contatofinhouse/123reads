@@ -3,7 +3,10 @@
 import Link from "next/link";
 import { CrossReference } from "@/data/cross-references";
 import { getAmazonLink, getCoverUrl } from "@/lib/amazon";
-import Image from "next/image";
+import { BookImage } from "@/components/BookImage";
+import { DynamicDescription } from "@/components/DynamicDescription";
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
 
 interface Props {
   crossRefs: CrossReference[];
@@ -12,11 +15,7 @@ interface Props {
 export function InsightsPage({ crossRefs }: Props) {
   return (
     <div className="container">
-      <header>
-        <Link href="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <h1>123<span>READS</span></h1>
-        </Link>
-      </header>
+      <Header />
 
       <main>
         <div className="list-page-header">
@@ -38,50 +37,34 @@ export function InsightsPage({ crossRefs }: Props) {
             >
               <div className="recommendation-result">
                 <div className="book-cover-container">
-                  <Image
+                  <BookImage
                     src={getCoverUrl(ref.isbn)}
                     alt={ref.title}
                     width={100}
                     height={150}
                     className="book-cover-img"
                     priority={idx < 6}
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = "none";
-                      const parent = target.parentElement;
-                      if (parent && !parent.querySelector(".book-mockup")) {
-                        const mockup = document.createElement("div");
-                        mockup.className = "book-mockup";
-                        mockup.innerHTML = `
-                          <div class="mockup-title">${ref.title}</div>
-                          <div class="mockup-author">${ref.author}</div>
-                        `;
-                        parent.appendChild(mockup);
-                      }
-                    }}
                   />
                 </div>
                 <div className="result-content">
                   <h3>{ref.title}</h3>
                   <div className="author">by {ref.author}</div>
+                  <DynamicDescription 
+                    isbn={ref.isbn} 
+                    fallback={ref.description || "A world-class recommendation featured on 123reads. Impartial and curated by leading minds."} 
+                  />
                   <div className="reason">
                     Recommended by <strong>{ref.count} influencers</strong>: {ref.recommendedBy.join(", ")}
                   </div>
-                  <div className="amazon-btn">Amazon &rarr;</div>
                 </div>
+                <div className="amazon-btn">Buy &rarr;</div>
               </div>
             </a>
           ))}
         </div>
       </main>
 
-      <footer>
-        <p>&copy; {new Date().getFullYear()} 123reads. All rights reserved.</p>
-        <div className="footer-links">
-          <Link href="/">Home</Link>
-          <Link href="/lists">All Lists</Link>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

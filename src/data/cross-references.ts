@@ -6,6 +6,7 @@ export interface CrossReference {
   isbn?: string;
   recommendedBy: string[];
   count: number;
+  description?: string;
 }
 
 export function computeCrossReferences(): CrossReference[] {
@@ -23,6 +24,7 @@ export function computeCrossReferences(): CrossReference[] {
           title: book.title,
           author: book.author,
           isbn: book.isbn,
+          description: book.description,
           recommendedBy: [influencer.name],
           count: 1,
         });

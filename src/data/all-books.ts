@@ -14,6 +14,7 @@ export function getAllBooks() {
             title: book.title,
             author: book.author,
             category: inf.category,
+            description: book.description,
             upvotes: 0,
             downvotes: 0
           });
@@ -32,6 +33,7 @@ export function getAllBooks() {
             title: book.title,
             author: book.author,
             category: list.category,
+            description: book.description,
             upvotes: 0,
             downvotes: 0
           });

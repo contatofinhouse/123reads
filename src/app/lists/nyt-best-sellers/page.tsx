@@ -1,6 +1,8 @@
 import { nytByYear } from "@/data/nyt-best-sellers";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "New York Times Best Sellers — All Years | 123reads",
@@ -12,11 +14,7 @@ export const metadata: Metadata = {
 export default function NYTIndexPage() {
   return (
     <div className="container">
-      <header>
-        <Link href="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <h1>123<span>READS</span></h1>
-        </Link>
-      </header>
+      <Header />
 
       <main>
         <div
@@ -141,17 +139,7 @@ export default function NYTIndexPage() {
         </section>
       </main>
 
-      <footer>
-        <p>
-          &copy; {new Date().getFullYear()} 123reads. All rights reserved. 123reads
-          is the impartial alternative to Goodreads.
-        </p>
-        <div className="footer-links">
-          <Link href="/lists">All Lists</Link>
-          <Link href="/guides/kindle">Kindle Guide</Link>
-          <Link href="/affiliate-disclosure">Affiliate Disclosure</Link>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
