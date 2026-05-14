@@ -441,6 +441,7 @@ function HomeContent() {
                       <div className="book-cover-container">
                         <BookImage
                           src={getCoverUrl(rec.isbn)}
+                          isbn={rec.isbn}
                           alt={rec.title}
                           width={100}
                           height={150}
@@ -507,6 +508,7 @@ function HomeContent() {
                 <div className="book-cover-container">
                   <BookImage
                     src={getCoverUrl(bookOfDay.isbn)}
+                    isbn={bookOfDay.isbn}
                     alt={bookOfDay.title}
                     width={100}
                     height={150}

@@ -66,6 +66,7 @@ export default function NYTIndexPage() {
                   <div key={book.isbn} className="nyt-cover-stack-item">
                     <BookImage
                       src={getCoverUrl(book.isbn, "S")}
+                      isbn={book.isbn}
                       alt={book.title}
                       width={55}
                       height={82}

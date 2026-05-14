@@ -100,6 +100,7 @@ export default async function NYTYearPage({ params }: PageProps) {
                 </div>
                 <BookImage
                   src={getCoverUrl(book.isbn)}
+                  isbn={book.isbn}
                   alt={book.title}
                   width={100}
                   height={150}

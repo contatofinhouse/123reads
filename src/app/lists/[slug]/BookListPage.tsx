@@ -40,11 +40,12 @@ export function BookListPage({ title, subtitle, books }: Props) {
                 <div className="book-cover-container">
                   <BookImage
                     src={getCoverUrl(book.isbn)}
+                    isbn={book.isbn}
                     alt={book.title}
                     width={100}
                     height={150}
                     className="book-cover-img"
-                    priority={idx < 6}
+                    priority={idx < 4}
                   />
                 </div>
                 <div className="result-content">

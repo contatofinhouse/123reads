@@ -39,6 +39,7 @@ export function InsightsPage({ crossRefs }: Props) {
                 <div className="book-cover-container">
                   <BookImage
                     src={getCoverUrl(ref.isbn)}
+                    isbn={ref.isbn}
                     alt={ref.title}
                     width={100}
                     height={150}

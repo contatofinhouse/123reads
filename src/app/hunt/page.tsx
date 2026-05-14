@@ -138,6 +138,7 @@ export default function HuntPage() {
                   <div className="hunt-book-cover">
                      <BookImage 
                         src={getCoverUrl(book.isbn, 'S')} 
+                        isbn={book.isbn}
                         alt={book.title} 
                         width={60}
                         height={90}

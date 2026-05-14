@@ -69,6 +69,7 @@ export function BookCarousel({ title, books, linkTo, linkLabel }: BookCarouselPr
             <div className="carousel-cover">
               <BookImage
                 src={getCoverUrl(book.isbn)}
+                isbn={book.isbn}
                 alt={book.title}
                 width={120}
                 height={180}
