@@ -443,6 +443,7 @@ function HomeContent() {
                           src={getCoverUrl(rec.isbn)}
                           isbn={rec.isbn}
                           alt={rec.title}
+                          author={rec.author}
                           width={100}
                           height={150}
                           className="book-cover-img"
@@ -510,9 +511,11 @@ function HomeContent() {
                     src={getCoverUrl(bookOfDay.isbn)}
                     isbn={bookOfDay.isbn}
                     alt={bookOfDay.title}
+                    author={bookOfDay.author}
                     width={100}
                     height={150}
                     className="book-cover-img"
+                    priority
                   />
                 </div>
                 <div>

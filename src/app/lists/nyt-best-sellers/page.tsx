@@ -68,6 +68,7 @@ export default function NYTIndexPage() {
                       src={getCoverUrl(book.isbn, "S")}
                       isbn={book.isbn}
                       alt={book.title}
+                      author={book.author}
                       width={55}
                       height={82}
                       className="book-cover-img"

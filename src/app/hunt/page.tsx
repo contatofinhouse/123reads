@@ -23,25 +23,47 @@ const CATEGORIES = ["All", "Business", "Tech", "Science", "Culture", "Lifestyle"
 export default function HuntPage() {
   const [books, setBooks] = useState<HuntBook[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
   const [activeCategory, setActiveCategory] = useState("All");
   const [votingId, setVotingId] = useState<string | null>(null);
   const [message, setMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
 
   useEffect(() => {
-    fetchBooks();
+    // Reset and fetch when category changes
+    setBooks([]);
+    setPage(1);
+    fetchBooks(1, true);
   }, [activeCategory]);
 
-  const fetchBooks = async () => {
-    setLoading(true);
+  const fetchBooks = async (pageNum: number, isNewCategory: boolean = false) => {
+    if (isNewCategory) setLoading(true);
+    else setLoadingMore(true);
+
     try {
-      const res = await fetch(`/api/hunt/list?category=${activeCategory}`);
+      const res = await fetch(`/api/hunt/list?category=${activeCategory}&page=${pageNum}&limit=20`);
       const data = await res.json();
-      setBooks(data.books || []);
+      
+      if (isNewCategory) {
+        setBooks(data.books || []);
+      } else {
+        setBooks(prev => [...prev, ...(data.books || [])]);
+      }
+      
+      setHasMore(data.hasMore);
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
+      setLoadingMore(false);
     }
+  };
+
+  const handleLoadMore = () => {
+    const nextPage = page + 1;
+    setPage(nextPage);
+    fetchBooks(nextPage);
   };
 
   const handleVote = async (book: HuntBook, type: 'up' | 'down') => {
@@ -131,47 +153,63 @@ export default function HuntPage() {
               <Link href="/lists" className="view-all-link">Go to Lists</Link>
             </div>
           ) : (
-            books.map((book, idx) => (
-              <div key={book.isbn} className="hunt-card">
-                <div className="hunt-rank">#{idx + 1}</div>
-                <div className="hunt-book-info">
-                  <div className="hunt-book-cover">
-                     <BookImage 
-                        src={getCoverUrl(book.isbn, 'S')} 
-                        isbn={book.isbn}
-                        alt={book.title} 
-                        width={60}
-                        height={90}
-                        className="book-cover-img"
-                      />
-                  </div>
-                  <div className="hunt-details">
-                    <h3>{book.title}</h3>
-                    <p>by {book.author}</p>
-                    <DynamicDescription 
-                      isbn={book.isbn} 
-                      fallback={book.description || "A world-class recommendation featured on 123reads. Impartial and curated by leading minds."} 
-                    />
-                    <span className="hunt-tag">{book.category}</span>
-                  </div>
-                </div>
-                  <div className="hunt-actions">
-                    <div className="vote-controls">
-                      <button 
-                        className="vote-btn up" 
-                        onClick={() => handleVote(book, 'up')}
-                        disabled={!!votingId}
-                      >
-                        <span className="vote-icon">▲</span>
-                        <span className="vote-count">{book.upvotes}</span>
-                      </button>
+            <>
+              {books.map((book, idx) => (
+                <div key={book.isbn} className="hunt-card">
+                  <div className="hunt-rank">#{idx + 1}</div>
+                  <div className="hunt-book-info">
+                    <div className="hunt-book-cover">
+                       <BookImage 
+                          src={getCoverUrl(book.isbn, 'S')} 
+                          isbn={book.isbn}
+                          alt={book.title} 
+                          author={book.author}
+                          width={60}
+                          height={90}
+                          className="book-cover-img"
+                        />
                     </div>
-                    <a href={getAmazonLink(book.title, book.author)} target="_blank" rel="noopener noreferrer" className="amazon-btn">
-                      Buy &rarr;
-                    </a>
+                    <div className="hunt-details">
+                      <h3>{book.title}</h3>
+                      <p>by {book.author}</p>
+                      <DynamicDescription 
+                        isbn={book.isbn} 
+                        fallback={book.description || "A world-class recommendation featured on 123reads. Impartial and curated by leading minds."} 
+                      />
+                      <span className="hunt-tag">{book.category}</span>
+                    </div>
                   </div>
-              </div>
-            ))
+                    <div className="hunt-actions">
+                      <div className="vote-controls">
+                        <button 
+                          className="vote-btn up" 
+                          onClick={() => handleVote(book, 'up')}
+                          disabled={!!votingId}
+                        >
+                          <span className="vote-icon">▲</span>
+                          <span className="vote-count">{book.upvotes}</span>
+                        </button>
+                      </div>
+                      <a href={getAmazonLink(book.title, book.author)} target="_blank" rel="noopener noreferrer" className="amazon-btn">
+                        Buy &rarr;
+                      </a>
+                    </div>
+                </div>
+              ))}
+
+              {hasMore && (
+                <div className="load-more-container" style={{ textAlign: 'center', marginTop: '2rem' }}>
+                  <button 
+                    className="view-all-link" 
+                    onClick={handleLoadMore}
+                    disabled={loadingMore}
+                    style={{ border: 'none', background: 'none', cursor: 'pointer' }}
+                  >
+                    {loadingMore ? "Loading more..." : "Load More Books ↓"}
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </main>

@@ -41,6 +41,7 @@ export function InsightsPage({ crossRefs }: Props) {
                     src={getCoverUrl(ref.isbn)}
                     isbn={ref.isbn}
                     alt={ref.title}
+                    author={ref.author}
                     width={100}
                     height={150}
                     className="book-cover-img"

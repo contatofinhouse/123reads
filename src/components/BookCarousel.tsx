@@ -71,6 +71,7 @@ export function BookCarousel({ title, books, linkTo, linkLabel }: BookCarouselPr
                 src={getCoverUrl(book.isbn)}
                 isbn={book.isbn}
                 alt={book.title}
+                author={book.author}
                 width={120}
                 height={180}
                 className="book-cover-img"

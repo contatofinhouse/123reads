@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
-import { getGoogleCoverUrl } from "@/lib/amazon";
 
 interface BookImageProps {
   src: string;
-  isbn?: string; // Added for fallback
+  isbn?: string;
   alt: string;
+  author?: string; // Added for the abstract cover
   width: number;
   height: number;
   className?: string;
@@ -15,27 +15,81 @@ interface BookImageProps {
   style?: React.CSSProperties;
 }
 
-export function BookImage({ src, isbn, alt, width, height, className, priority, style }: BookImageProps) {
+export function BookImage({ src, isbn, alt, author, width, height, className, priority, style }: BookImageProps) {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [currentSrc, setCurrentSrc] = useState(src);
-  const [hasRetried, setHasRetried] = useState(false);
 
-  // Sync internal state if src prop changes
+  // Deterministic gradient based on title
+  const abstractStyle = useMemo(() => {
+    const themes = [
+      { bg: "linear-gradient(135deg, #FF5F6D, #FFC371)", text: "#fff" }, // Sunset
+      { bg: "linear-gradient(135deg, #2193b0, #6dd5ed)", text: "#fff" }, // Ocean
+      { bg: "linear-gradient(135deg, #ee9ca7, #ffdde1)", text: "#d63384" }, // Rose
+      { bg: "linear-gradient(135deg, #11998e, #38ef7d)", text: "#fff" }, // Emerald
+      { bg: "linear-gradient(135deg, #8E2DE2, #4A00E0)", text: "#fff" }, // Royal
+      { bg: "linear-gradient(135deg, #f953c6, #b91d73)", text: "#fff" }, // Pink
+      { bg: "linear-gradient(135deg, #f7b733, #fc4a1a)", text: "#fff" }, // Fire
+      { bg: "linear-gradient(135deg, #00B4DB, #0083B0)", text: "#fff" }, // Blue
+    ];
+    
+    // Simple hash function
+    let hash = 0;
+    for (let i = 0; i < alt.length; i++) {
+      hash = alt.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const index = Math.abs(hash) % themes.length;
+    return themes[index];
+  }, [alt]);
+
   useEffect(() => {
-    setCurrentSrc(src);
     setError(false);
-    setHasRetried(false);
+    setIsLoading(true);
   }, [src]);
 
-  if (error) {
+  if (error || !src) {
     return (
       <div 
-        className={`book-mockup ${className || ""}`} 
-        style={{ width: `${width}px`, height: `${height}px`, ...style }}
+        className={`book-abstract-cover ${className || ""}`} 
+        style={{ 
+          width: `${width}px`, 
+          height: `${height}px`, 
+          background: abstractStyle.bg,
+          color: abstractStyle.text,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '1rem',
+          textAlign: 'center',
+          border: '2px solid var(--text-primary)',
+          borderRadius: '8px',
+          boxShadow: '4px 4px 0px var(--text-primary)',
+          ...style 
+        }}
       >
-        <div className="mockup-title">{alt}</div>
-        <div className="mockup-author">Unknown</div>
+        <div style={{ 
+          fontSize: width < 100 ? '0.7rem' : '0.9rem', 
+          fontWeight: 900, 
+          textTransform: 'uppercase',
+          lineHeight: 1.2,
+          marginBottom: '0.5rem',
+          display: '-webkit-box',
+          WebkitLineClamp: 4,
+          WebkitBoxOrient: 'vertical',
+          overflow: 'hidden'
+        }}>
+          {alt}
+        </div>
+        {author && width > 80 && (
+          <div style={{ 
+            fontSize: '0.6rem', 
+            fontWeight: 700, 
+            opacity: 0.8,
+            textTransform: 'uppercase'
+          }}>
+            {author}
+          </div>
+        )}
       </div>
     );
   }
@@ -58,8 +112,8 @@ export function BookImage({ src, isbn, alt, width, height, className, priority, 
         />
       )}
       <Image
-        key={currentSrc}
-        src={currentSrc}
+        key={src}
+        src={src}
         alt={alt}
         width={width}
         height={height}
@@ -67,14 +121,8 @@ export function BookImage({ src, isbn, alt, width, height, className, priority, 
         priority={priority}
         onLoad={() => setIsLoading(false)}
         onError={() => {
-          if (!hasRetried && isbn) {
-            console.log(`Fallback to Google Books for ISBN: ${isbn}`);
-            setHasRetried(true);
-            setCurrentSrc(getGoogleCoverUrl(isbn));
-          } else {
-            setError(true);
-            setIsLoading(false);
-          }
+          setError(true);
+          setIsLoading(false);
         }}
         style={{ ...style, opacity: isLoading ? 0 : 1, transition: 'opacity 0.3s ease-in-out' }}
       />

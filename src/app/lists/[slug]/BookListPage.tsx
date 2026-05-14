@@ -42,6 +42,7 @@ export function BookListPage({ title, subtitle, books }: Props) {
                     src={getCoverUrl(book.isbn)}
                     isbn={book.isbn}
                     alt={book.title}
+                    author={book.author}
                     width={100}
                     height={150}
                     className="book-cover-img"
