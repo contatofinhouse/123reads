@@ -53,13 +53,12 @@ export function BookImage({ src, alt, width, height, className, priority, style 
         height={height}
         className={className}
         priority={priority}
-        unoptimized={true}
         onLoad={() => setIsLoading(false)}
         onError={() => {
           setError(true);
           setIsLoading(false);
         }}
-        style={{ ...style, display: isLoading ? 'none' : 'block' }}
+        style={{ ...style, opacity: isLoading ? 0 : 1, transition: 'opacity 0.3s ease-in-out' }}
       />
     </div>
   );

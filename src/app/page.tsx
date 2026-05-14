@@ -11,9 +11,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { InfluencerAvatar } from "@/components/InfluencerAvatar";
 import { BookImage } from "@/components/BookImage";
+import { BookCarousel } from "@/components/BookCarousel";
 import { QuotesSection } from "@/components/QuotesSection";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { nytByYear } from "@/data/nyt-best-sellers";
+import { computeCrossReferences } from "@/data/cross-references";
+import { thematicLists } from "@/data/thematic-lists";
 
 const AGE_FILTERS = ["Children", "Teens", "Young Adult", "Adult"];
 const GENRE_FILTERS = ["Fiction", "Non-fiction", "Sci-Fi", "Fantasy", "Business", "Self-Help", "History"];
@@ -519,6 +523,14 @@ function HomeContent() {
           </a>
         )}
 
+        {/* NYT Best Sellers 2026 Carousel */}
+        <BookCarousel
+          title="NYT Best Sellers 2026"
+          books={nytByYear[0].fiction.map(b => ({ title: b.title, author: b.author, isbn: b.isbn }))}
+          linkTo="/lists/nyt-best-sellers"
+          linkLabel="All years"
+        />
+
         {/* Bottom Level: Influencer Preview */}
         <section className="influencers-section">
           <div className="section-header-row">
@@ -564,6 +576,14 @@ function HomeContent() {
           </div>
         </section>
 
+        {/* Most Recommended by Influencers Carousel */}
+        <BookCarousel
+          title="Most Recommended by Influencers"
+          books={computeCrossReferences().slice(0, 15).map(b => ({ title: b.title, author: b.author, isbn: b.isbn }))}
+          linkTo="/insights"
+          linkLabel="View insights"
+        />
+
         {/* 123reads Hunt Section */}
         <section className="trending-hunt" style={{ marginTop: "4rem", marginBottom: "4rem" }}>
           <div className="section-header-row">
@@ -600,6 +620,16 @@ function HomeContent() {
             ))}
           </div>
         </section>
+
+        {/* World Literature Picks Carousel */}
+        <BookCarousel
+          title="World Literature Picks"
+          books={thematicLists
+            .filter(list => list.category === "World Literature")
+            .flatMap(list => list.books.slice(0, 2).map(b => ({ title: b.title, author: b.author, isbn: b.isbn })))}
+          linkTo="/lists"
+          linkLabel="Explore all lists"
+        />
 
         {/* Competitive SEO Section: Why 123reads? */}
         <section className="vs-goodreads-new" style={{ marginTop: "6rem", marginBottom: "6rem" }}>
