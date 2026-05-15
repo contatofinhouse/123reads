@@ -7,6 +7,8 @@ import { BookImage } from "@/components/BookImage";
 import { DynamicDescription } from "@/components/DynamicDescription";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { communityTrends } from "@/data/community-trends";
+import { SocialBadge } from "@/components/SocialBadge";
 
 interface Props {
   crossRefs: CrossReference[];
@@ -51,6 +53,10 @@ export function InsightsPage({ crossRefs }: Props) {
                 <div className="result-content">
                   <h3>{ref.title}</h3>
                   <div className="author">by {ref.author}</div>
+                  <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem", flexWrap: "wrap" }}>
+                    {communityTrends.find(t => t.isbn === ref.isbn && t.platform === 'BookTok') && <SocialBadge platform="BookTok" />}
+                    {communityTrends.find(t => t.isbn === ref.isbn && t.platform === 'Reddit') && <SocialBadge platform="Reddit" />}
+                  </div>
                   <DynamicDescription 
                     isbn={ref.isbn} 
                     fallback={ref.description || "A world-class recommendation featured on 123reads. Impartial and curated by leading minds."} 

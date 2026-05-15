@@ -8,6 +8,8 @@ import Link from "next/link";
 import { BookImage } from "@/components/BookImage";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { communityTrends } from "@/data/community-trends";
+import { SocialBadge } from "@/components/SocialBadge";
 
 interface Props {
   title: string;
@@ -53,6 +55,10 @@ export function BookListPage({ title, subtitle, books }: Props) {
                   <h3>{book.title}</h3>
                   <div className="author">by {book.author}</div>
                   <StarRating rating={book.rating} />
+                  <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem", flexWrap: "wrap" }}>
+                    {communityTrends.find(t => t.isbn === book.isbn && t.platform === 'BookTok') && <SocialBadge platform="BookTok" />}
+                    {communityTrends.find(t => t.isbn === book.isbn && t.platform === 'Reddit') && <SocialBadge platform="Reddit" />}
+                  </div>
                   <DynamicDescription 
                     isbn={book.isbn} 
                     fallback={book.description || "A world-class recommendation featured on 123reads. Impartial and curated by leading minds."} 

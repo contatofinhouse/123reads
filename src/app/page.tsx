@@ -18,6 +18,9 @@ import { Header } from "@/components/Header";
 import { nytByYear } from "@/data/nyt-best-sellers";
 import { computeCrossReferences } from "@/data/cross-references";
 import { thematicLists } from "@/data/thematic-lists";
+import { communityTrends } from "@/data/community-trends";
+import { CommunitySection } from "@/components/CommunitySection";
+import { SocialBadge } from "@/components/SocialBadge";
 
 const AGE_FILTERS = ["Children", "Teens", "Young Adult", "Adult"];
 const GENRE_FILTERS = ["Fiction", "Non-fiction", "Sci-Fi", "Fantasy", "Business", "Self-Help", "History"];
@@ -454,6 +457,10 @@ function HomeContent() {
                         <h3>{rec.title}</h3>
                         <div className="author">by {rec.author}</div>
                         <StarRating rating={rec.rating} />
+                        <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem", flexWrap: "wrap" }}>
+                          {communityTrends.find(t => t.isbn === rec.isbn && t.platform === 'BookTok') && <SocialBadge platform="BookTok" />}
+                          {communityTrends.find(t => t.isbn === rec.isbn && t.platform === 'Reddit') && <SocialBadge platform="Reddit" />}
+                        </div>
                         {rec.reason && <div className="book-description-text">{rec.reason}</div>}
                       </div>
                       <div className="amazon-btn">Buy &rarr;</div>
@@ -535,6 +542,9 @@ function HomeContent() {
           linkTo="/lists/nyt-best-sellers"
           linkLabel="All years"
         />
+        
+        {/* Community Section (BookTok & Reddit) */}
+        <CommunitySection />
 
         {/* Bottom Level: Influencer Preview */}
         <section className="influencers-section">

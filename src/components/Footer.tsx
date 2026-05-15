@@ -16,20 +16,35 @@ export function Footer() {
           <Link href="/lists">All Book Lists</Link>
           <Link href="/hunt">Community Hunt</Link>
           <Link href="/lists/nyt-best-sellers">NYT Best Sellers</Link>
+          <Link href="/guides/kindle">Kindle Guide</Link>
+          <Link href="/affiliate-disclosure">Disclosure</Link>
         </div>
 
         <div className="footer-links-group">
-          <h4>Resources</h4>
-          <Link href="/guides/kindle">Kindle Buying Guide</Link>
-          <Link href="/affiliate-disclosure">Affiliate Disclosure</Link>
-          <Link href="/guides/kindle">Best E-Readers 2026</Link>
+          <h4>Community Pulse</h4>
+          <Link href="/lists/booktok-viral-hits">#BookTok</Link>
+          <Link href="/lists/reddits-all-time-favorites">#rBooks</Link>
+          <Link href="/lists/booktok-viral-hits">#Bookstagram</Link>
+          <Link href="/lists?q=booktube">#BookTube</Link>
+          <Link href="/lists?q=suggestmeabook">#SuggestMeABook</Link>
+          <div className="social-logos" style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
+            <a href="https://tiktok.com/@123reads" target="_blank" rel="noopener noreferrer" title="TikTok Community" style={{ color: 'var(--text-secondary)' }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.03 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.9-.32-1.98-.23-2.81.31-.72.42-1.24 1.16-1.41 1.97-.05.33-.06.67-.05 1.01.05 1.21.62 2.34 1.59 3.05.77.56 1.74.83 2.69.75 1.2-.07 2.32-.74 2.91-1.81.45-.7.65-1.54.63-2.37-.02-3.35-.01-6.71-.01-10.06z"/></svg>
+            </a>
+            <a href="https://reddit.com/r/books" target="_blank" rel="noopener noreferrer" title="Reddit Books" style={{ color: 'var(--text-secondary)' }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.057 1.597.047.253.075.512.075.776 0 2.274-2.481 4.119-5.541 4.119-3.06 0-5.541-1.845-5.541-4.119 0-.253.027-.503.069-.747a1.737 1.737 0 0 1-1.019-1.587c0-.968.786-1.754 1.754-1.754.463 0 .875.18 1.179.465 1.196-.846 2.84-1.398 4.652-1.482l.805-3.779c.031-.149.17-.257.327-.243l3.143.664c.125-.162.33-.266.56-.266zM10.74 11.061c-.476 0-.859.383-.859.859s.383.86.859.86c.476 0 .86-.384.86-.86s-.384-.859-.86-.859zm4.52 0c-.476 0-.859.383-.859.859s.383.86.859.86c.476 0 .86-.384.86-.86s-.384-.859-.86-.859zm-4.525 2.433c-.05.003-.101.008-.15.014a.27.27 0 0 0-.214.286c.006.15.132.261.282.255.049-.003.075-.016.159-.016h.016c.303 0 .568.138.746.39.23.351.59.58 1.007.58.416 0 .777-.229 1.008-.58.178-.252.443-.39.746-.39h.016c.084 0 .11.013.159.016.15.006.276-.105.282-.255a.27.27 0 0 0-.214-.286c-.05-.006-.1-.011-.15-.014h-.016c-.432 0-.813.193-1.035.539-.135.21-.354.347-.604.347-.25 0-.469-.137-.604-.347-.222-.346-.603-.539-1.035-.539h-.016z" /></svg>
+            </a>
+            <a href="https://instagram.com/explore/tags/bookstagram" target="_blank" rel="noopener noreferrer" title="Bookstagram" style={{ color: 'var(--text-secondary)' }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+          </div>
         </div>
 
         <div className="footer-links-group">
           <h4>Popular Themes</h4>
-          <Link href="/lists?q=productivity">Productivity</Link>
-          <Link href="/lists?q=biographies">Biographies</Link>
-          <Link href="/lists?q=sci-fi">Sci-Fi Classics</Link>
+          <Link href="/lists/best-books-productivity">Productivity</Link>
+          <Link href="/lists/must-read-sci-fi-classics">Sci-Fi Classics</Link>
+          <Link href="/lists/best-books-for-entrepreneurs">Entrepreneurs</Link>
         </div>
       </div>
 

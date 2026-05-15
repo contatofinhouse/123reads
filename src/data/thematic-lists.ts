@@ -237,5 +237,34 @@ export const thematicLists: ThematicList[] = [
       { title: "Shoe Dog", author: "Phil Knight", isbn: "9781501135910", description: "The candid memoir of the creator of Nike about building a global empire." },
       { title: "The Autobiography of Malcolm X", author: "Malcolm X", isbn: "9780345350688", description: "A landmark work of 20th-century literature about struggle, change, and faith." }
     ]
+  },
+  // --- Community Favorites ---
+  {
+    title: "BookTok Viral Hits",
+    slug: "booktok-viral-hits",
+    description: "The books that defined a generation on TikTok. From emotional tear-jerkers to unputdownable thrillers.",
+    image: "/images/theme_booktok.png",
+    category: "Community Favorites",
+    books: [
+      { title: "The Seven Husbands of Evelyn Hugo", author: "Taylor Jenkins Reid", isbn: "9781501161933", description: "The ultimate 'emotional damage' read that defined a generation of BookTok." },
+      { title: "It Ends with Us", author: "Colleen Hoover", isbn: "9781501110368", description: "Sparked a global conversation about relationships and resilience." },
+      { title: "The Song of Achilles", author: "Madeline Miller", isbn: "9780062060624", description: "Viral for its poetic prose and heartbreaking reimagining of Greek myth." },
+      { title: "The Silent Patient", author: "Alex Michaelides", isbn: "9781250301697", description: "The thriller twist that everyone told their followers they 'didn't see coming'." },
+      { title: "Circe", author: "Madeline Miller", isbn: "9780316556347", description: "Celebrated for its feminist perspective and atmospheric world-building." }
+    ]
+  },
+  {
+    title: "Reddit's All-Time Favorites",
+    slug: "reddits-all-time-favorites",
+    description: "The most recommended books across r/books, r/printSF, and r/suggestmeabook. High-signal, community-vetted.",
+    image: "/images/theme_reddit.png",
+    category: "Community Favorites",
+    books: [
+      { title: "Project Hail Mary", author: "Andy Weir", isbn: "9780593135204", description: "Constantly voted the #1 'must-read' on Reddit for its humor and scientific heart." },
+      { title: "House of Leaves", author: "Mark Z. Danielewski", isbn: "9780375703768", description: "A cult classic obsessed over for its unique structure and psychological depth." },
+      { title: "Dark Matter", author: "Blake Crouch", isbn: "9781101904220", description: "The go-to recommendation for anyone asking for a 'fast-paced' sci-fi thriller." },
+      { title: "Stoner", author: "John Williams", isbn: "9781590171997", description: "A 'forgotten classic' that Reddit brought back to life through pure word-of-mouth." },
+      { title: "The Martian", author: "Andy Weir", isbn: "9780553418026", description: "The book that proved technical accuracy could be incredibly entertaining." }
+    ]
   }
 ];
