@@ -2,13 +2,15 @@
 
 import { useRef } from "react";
 import Link from "next/link";
-import { getAmazonLink, getCoverUrl } from "@/lib/amazon";
+import { getCoverUrl } from "@/lib/amazon";
 import { BookImage } from "@/components/BookImage";
+import { useBookQuickView } from "@/context/BookQuickViewContext";
 
 interface CarouselBook {
   title: string;
   author: string;
   isbn?: string;
+  description?: string;
 }
 
 interface BookCarouselProps {
@@ -20,6 +22,7 @@ interface BookCarouselProps {
 
 export function BookCarousel({ title, books, linkTo, linkLabel }: BookCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { openQuickView } = useBookQuickView();
 
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
@@ -59,17 +62,19 @@ export function BookCarousel({ title, books, linkTo, linkLabel }: BookCarouselPr
 
       <div className="carousel-track" ref={scrollRef}>
         {books.map((book, idx) => (
-          <a
+          <div
             key={`${book.isbn || book.title}-${idx}`}
-            href={getAmazonLink(book.title, book.author)}
-            target="_blank"
-            rel="noopener noreferrer"
+            onClick={() => openQuickView(book)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => { if (e.key === "Enter") openQuickView(book) }}
             className="carousel-item"
+            style={{ cursor: "pointer", outline: "none" }}
           >
             <div className="carousel-cover">
               <BookImage
-                src={getCoverUrl(book.isbn)}
-                isbn={book.isbn}
+                src={getCoverUrl(book.isbn || '')}
+                isbn={book.isbn || ''}
                 alt={book.title}
                 author={book.author}
                 width={120}
@@ -82,7 +87,7 @@ export function BookCarousel({ title, books, linkTo, linkLabel }: BookCarouselPr
               <strong className="carousel-book-title">{book.title}</strong>
               <span className="carousel-book-author">{book.author}</span>
             </div>
-          </a>
+          </div>
         ))}
       </div>
     </section>

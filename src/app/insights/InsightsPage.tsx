@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { CrossReference } from "@/data/cross-references";
-import { getAmazonLink, getCoverUrl } from "@/lib/amazon";
+import { getCoverUrl } from "@/lib/amazon";
+import { useBookQuickView } from "@/context/BookQuickViewContext";
 import { BookImage } from "@/components/BookImage";
 import { DynamicDescription } from "@/components/DynamicDescription";
 import { Footer } from "@/components/Footer";
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export function InsightsPage({ crossRefs }: Props) {
+  const { openQuickView } = useBookQuickView();
   return (
     <div className="container">
       <Header />
@@ -30,12 +32,14 @@ export function InsightsPage({ crossRefs }: Props) {
 
         <div className="results-container">
           {crossRefs.map((ref, idx) => (
-            <a
+            <div
               key={idx}
-              href={getAmazonLink(ref.title, ref.author)}
-              target="_blank"
-              rel="noopener noreferrer"
+              onClick={() => openQuickView(ref)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === "Enter") openQuickView(ref) }}
               className="recommendation-result-link"
+              style={{ cursor: "pointer" }}
             >
               <div className="recommendation-result">
                 <div className="book-cover-container">
@@ -65,9 +69,9 @@ export function InsightsPage({ crossRefs }: Props) {
                     Recommended by <strong>{ref.count} influencers</strong>: {ref.recommendedBy.join(", ")}
                   </div>
                 </div>
-                <div className="amazon-btn">Buy &rarr;</div>
+                <div className="amazon-btn">Quick View &rarr;</div>
               </div>
-            </a>
+            </div>
           ))}
         </div>
       </main>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { GoogleAnalytics } from '@next/third-parties/google';
+import { Providers } from "@/components/Providers";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://123reads.com"),
@@ -73,7 +74,9 @@ export default function RootLayout({
         />
       </head>
       <body>
-        {children}
+        <Providers>
+          {children}
+        </Providers>
         <Analytics />
         {gaId && <GoogleAnalytics gaId={gaId} />}
       </body>

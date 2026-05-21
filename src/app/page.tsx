@@ -21,6 +21,7 @@ import { thematicLists } from "@/data/thematic-lists";
 import { communityTrends } from "@/data/community-trends";
 import { CommunitySection } from "@/components/CommunitySection";
 import { SocialBadge } from "@/components/SocialBadge";
+import { useBookQuickView } from "@/context/BookQuickViewContext";
 
 const AGE_FILTERS = ["Children", "Teens", "Young Adult", "Adult"];
 const GENRE_FILTERS = ["Fiction", "Non-fiction", "Sci-Fi", "Fantasy", "Business", "Self-Help", "History"];
@@ -100,6 +101,8 @@ function HomeContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+
+  const { openQuickView } = useBookQuickView();
 
   // UX Features
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
@@ -295,10 +298,10 @@ function HomeContent() {
             <div className="shelf-list">
               {shelf.map((book, idx) => (
                 <div key={idx} className="shelf-item">
-                  <a href={getAmazonLink(book.title, book.author)} target="_blank" rel="noopener noreferrer" className="shelf-item-link">
+                  <div onClick={() => openQuickView({ title: book.title, author: book.author, isbn: book.isbn })} className="shelf-item-link" style={{ cursor: "pointer", flex: 1 }}>
                     <strong>{book.title}</strong>
                     <span>by {book.author}</span>
-                  </a>
+                  </div>
                   <button className="shelf-remove" onClick={() => removeFromShelf(book.title)} title="Remove">&times;</button>
                 </div>
               ))}
@@ -439,7 +442,7 @@ function HomeContent() {
             <div className="results-container">
               {recommendations.map((rec, idx) => (
                 <div key={idx} className="result-wrapper" style={{ animationDelay: `${idx * 0.1}s` }}>
-                  <a href={getAmazonLink(rec.title, rec.author)} target="_blank" rel="noopener noreferrer" className="recommendation-result-link">
+                  <div onClick={() => openQuickView({ title: rec.title, author: rec.author, isbn: rec.isbn, description: rec.reason })} className="recommendation-result-link" style={{ cursor: "pointer" }}>
                     <div className="recommendation-result">
                       <div className="book-cover-container">
                         <BookImage
@@ -463,9 +466,9 @@ function HomeContent() {
                         </div>
                         {rec.reason && <div className="book-description-text">{rec.reason}</div>}
                       </div>
-                      <div className="amazon-btn">Buy &rarr;</div>
+                      <div className="amazon-btn">Quick View &rarr;</div>
                     </div>
-                  </a>
+                  </div>
                   <div className="card-actions">
                     <button
                       className="share-btn"
@@ -509,7 +512,7 @@ function HomeContent() {
 
         {/* Middle Level: Book of the Day */}
         {bookOfDay && (
-          <a href={getAmazonLink(bookOfDay.title, bookOfDay.author)} target="_blank" rel="noopener noreferrer" className="botd-link">
+          <div onClick={() => openQuickView({ title: bookOfDay.title, author: bookOfDay.author, isbn: bookOfDay.isbn, description: bookOfDay.reason })} className="botd-link" style={{ cursor: "pointer", display: "block" }}>
             <section className="book-of-day">
               <div className="botd-label">BOOK OF THE DAY</div>
               <div className="botd-content">
@@ -532,7 +535,7 @@ function HomeContent() {
                 </div>
               </div>
             </section>
-          </a>
+          </div>
         )}
 
         {/* NYT Best Sellers 2026 Carousel */}
@@ -609,7 +612,7 @@ function HomeContent() {
           </div>
           <div className="hunt-preview-list">
             {influencers.slice(0, 1).flatMap(i => i.books).slice(0, 3).map((book, idx) => (
-              <div key={book.isbn} className="hunt-mini-card">
+              <div key={book.isbn} onClick={() => openQuickView(book)} className="hunt-mini-card" style={{ cursor: "pointer" }}>
                 <div className="hunt-rank">#{idx + 1}</div>
                 <div style={{ width: "40px", height: "60px", flexShrink: 0, overflow: "hidden", borderRadius: "4px" }}>
                   <BookImage

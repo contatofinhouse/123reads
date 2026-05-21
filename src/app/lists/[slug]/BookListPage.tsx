@@ -1,10 +1,11 @@
 "use client";
 
 import { Book } from "@/data/influencers";
-import { getAmazonLink, getCoverUrl } from "@/lib/amazon";
+import { getCoverUrl } from "@/lib/amazon";
 import { StarRating } from "@/components/StarRating";
 import { DynamicDescription } from "@/components/DynamicDescription";
 import Link from "next/link";
+import { useBookQuickView } from "@/context/BookQuickViewContext";
 import { BookImage } from "@/components/BookImage";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
@@ -18,6 +19,7 @@ interface Props {
 }
 
 export function BookListPage({ title, subtitle, books }: Props) {
+  const { openQuickView } = useBookQuickView();
   return (
     <div className="container">
       <Header />
@@ -31,12 +33,14 @@ export function BookListPage({ title, subtitle, books }: Props) {
 
         <div className="results-container">
           {books.map((book, idx) => (
-            <a
+            <div
               key={idx}
-              href={getAmazonLink(book.title, book.author)}
-              target="_blank"
-              rel="noopener noreferrer"
+              onClick={() => openQuickView(book)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === "Enter") openQuickView(book) }}
               className="recommendation-result-link"
+              style={{ cursor: 'pointer' }}
             >
               <div className="recommendation-result">
                 <div className="book-cover-container">
@@ -64,9 +68,9 @@ export function BookListPage({ title, subtitle, books }: Props) {
                     fallback={book.description || "A world-class recommendation featured on 123reads. Impartial and curated by leading minds."} 
                   />
                 </div>
-                <div className="amazon-btn">Buy &rarr;</div>
+                <div className="amazon-btn">Quick View &rarr;</div>
               </div>
-            </a>
+            </div>
           ))}
         </div>
       </main>

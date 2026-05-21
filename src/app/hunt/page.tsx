@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { getCoverUrl, getAmazonLink } from "@/lib/amazon";
+import { getCoverUrl } from "@/lib/amazon";
+import { useBookQuickView } from "@/context/BookQuickViewContext";
 import { BookImage } from "@/components/BookImage";
 import { DynamicDescription } from "@/components/DynamicDescription";
 import { Footer } from "@/components/Footer";
@@ -21,6 +22,7 @@ interface HuntBook {
 const CATEGORIES = ["All", "Business", "Tech", "Science", "Culture", "Lifestyle", "Authors"];
 
 export default function HuntPage() {
+  const { openQuickView } = useBookQuickView();
   const [books, setBooks] = useState<HuntBook[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -190,9 +192,9 @@ export default function HuntPage() {
                           <span className="vote-count">{book.upvotes}</span>
                         </button>
                       </div>
-                      <a href={getAmazonLink(book.title, book.author)} target="_blank" rel="noopener noreferrer" className="amazon-btn">
-                        Buy &rarr;
-                      </a>
+                      <div onClick={() => openQuickView(book)} className="amazon-btn" style={{ cursor: 'pointer' }} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter") openQuickView(book) }}>
+                        Quick View &rarr;
+                      </div>
                     </div>
                 </div>
               ))}

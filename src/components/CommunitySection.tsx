@@ -1,11 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
 import { BookImage } from './BookImage';
-import { getAmazonLink, getCoverUrl } from '@/lib/amazon';
+import { getCoverUrl } from '@/lib/amazon';
 import { SocialBadge } from './SocialBadge';
 import { communityTrends } from '@/data/community-trends';
+import { useBookQuickView } from '@/context/BookQuickViewContext';
 
 export const CommunitySection: React.FC = () => {
+  const { openQuickView } = useBookQuickView();
   // Take 3 from BookTok and 3 from Reddit for the preview
   const booktokTrending = communityTrends.filter(t => t.platform === 'BookTok').slice(0, 3);
   const redditTrending = communityTrends.filter(t => t.platform === 'Reddit').slice(0, 3);
@@ -39,7 +41,7 @@ export const CommunitySection: React.FC = () => {
           </div>
           <div className="community-cards-stack" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {booktokTrending.map((book) => (
-              <a key={book.isbn} href={getAmazonLink(book.title, book.author)} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div key={book.isbn} onClick={() => openQuickView(book)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter") openQuickView(book) }} style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer', outline: 'none' }}>
                 <div className="community-mini-card" style={{ 
                   display: 'flex', 
                   gap: '1rem', 
@@ -59,7 +61,7 @@ export const CommunitySection: React.FC = () => {
                     <div style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--accent-color)' }}>{book.mentionCount}</div>
                   </div>
                 </div>
-              </a>
+              </div>
             ))}
           </div>
         </div>
@@ -71,7 +73,7 @@ export const CommunitySection: React.FC = () => {
           </div>
           <div className="community-cards-stack" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {redditTrending.map((book) => (
-              <a key={book.isbn} href={getAmazonLink(book.title, book.author)} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div key={book.isbn} onClick={() => openQuickView(book)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter") openQuickView(book) }} style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer', outline: 'none' }}>
                 <div className="community-mini-card" style={{ 
                   display: 'flex', 
                   gap: '1rem', 
@@ -91,7 +93,7 @@ export const CommunitySection: React.FC = () => {
                     <div style={{ fontSize: '0.7rem', fontWeight: 700, color: '#FF4500' }}>{book.mentionCount}</div>
                   </div>
                 </div>
-              </a>
+              </div>
             ))}
           </div>
         </div>
