@@ -309,10 +309,10 @@ function HomeContent() {
 
       <main>
         {/* Hero Subtitle */}
-        <section className="site-hero">
-          <p className="site-subtitle">Like Goodreads. But better.</p>
-          <h1 className="site-headline">Discover your next<br /> great read</h1>
-          <p className="hero-description">
+        <section className="site-hero" style={{ textAlign: "center" }}>
+          <p className="site-subtitle" style={{ textAlign: "center", width: "100%", display: "block" }}>Like Goodreads. But better.</p>
+          <h1 className="site-headline" style={{ textAlign: "center", width: "100%", display: "block", justifyContent: "center" }}>Discover your next<br /> great read</h1>
+          <p className="hero-description" style={{ textAlign: "center", width: "100%", display: "block" }}>
             The un-Amazon alternative. AI-powered recommendations based on quality, not sales algorithms.
           </p>
         </section>
