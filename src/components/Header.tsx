@@ -22,11 +22,14 @@ export function Header() {
   return (
     <header className="site-header">
       <Link href="/" style={{ textDecoration: "none" }}>
-        <h1 style={{ color: "#000", textDecoration: "none" }}>123<span>READS</span></h1>
+        <div style={{ fontSize: "1.5rem", fontWeight: 800, letterSpacing: "-0.05em", color: "#000", margin: 0, display: "flex", alignItems: "center" }}>
+          123<span style={{ color: "var(--accent-color)" }}>READS</span>
+        </div>
       </Link>
       
       <nav className="header-nav-simple">
         <Link href="/lists">Lists</Link>
+        <Link href="/lists/nyt-best-sellers">NYT</Link>
         <Link href="/hunt" className="hunt-link">Hunt</Link>
         <Link href="/#shelf" className="shelf-link">
            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">

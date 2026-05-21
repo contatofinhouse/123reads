@@ -80,7 +80,7 @@ export default function KindleGuidePage() {
         <section className="guide-section">
           <div className="guide-grid">
             <div className="guide-image-container">
-              <img src="/images/kindle-paperwhite.png" alt="Kindle Paperwhite" />
+              <img src="/images/kindle-paperwhite.webp" alt="Kindle Paperwhite" />
             </div>
             <div className="guide-content">
               <h2>1. Kindle Paperwhite</h2>
@@ -114,7 +114,7 @@ export default function KindleGuidePage() {
         <section className="guide-section">
           <div className="guide-grid reverse">
             <div className="guide-image-container">
-              <img src="/images/kindle-scribe.png" alt="Kindle Scribe" />
+              <img src="/images/kindle-scribe.webp" alt="Kindle Scribe" />
             </div>
             <div className="guide-content">
               <h2>2. Kindle Scribe</h2>
@@ -149,7 +149,7 @@ export default function KindleGuidePage() {
         <section className="guide-section">
           <div className="guide-grid">
             <div className="guide-image-container">
-              <img src="/images/kindle-basic.png" alt="Kindle Basic" />
+              <img src="/images/kindle-basic.webp" alt="Kindle Basic" />
             </div>
             <div className="guide-content">
               <h2>3. Kindle (2022 Release)</h2>

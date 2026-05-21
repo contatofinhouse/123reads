@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     description: "Ready for your next obsession? 📚 Like Goodreads, but impartial. AI-powered recommendations curated by the world's sharpest minds.",
     images: [
       {
-        url: "/images/og-image.png",
+        url: "/images/og-image.webp",
         width: 1200,
         height: 630,
         alt: "123reads AI Book Recommendations",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "123reads | Better & Impartial Book Recommendations",
     description: "The impartial alternative to Goodreads. 📚 AI-powered book recommendations curated by the world's sharpest minds.",
-    images: ["/images/og-image.png"],
+    images: ["/images/og-image.webp"],
   },
   robots: {
     index: true,
@@ -52,6 +52,25 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://covers.openlibrary.org" crossOrigin="anonymous" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "123reads",
+              "url": "https://123reads.com",
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": {
+                  "@type": "EntryPoint",
+                  "urlTemplate": "https://123reads.com/search?q={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+              }
+            })
+          }}
+        />
       </head>
       <body>
         {children}

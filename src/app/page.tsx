@@ -311,8 +311,8 @@ function HomeContent() {
         {/* Hero Subtitle */}
         <section className="site-hero">
           <p className="site-subtitle">Like Goodreads. But better.</p>
-          <h2 className="site-headline">Discover your next<br /> great read</h2>
-          <p className="hero-description" style={{ color: "var(--text-secondary)", maxWidth: "600px", margin: "1rem auto", fontSize: "1.1rem", lineHeight: "1.6" }}>
+          <h1 className="site-headline">Discover your next<br /> great read</h1>
+          <p className="hero-description">
             The un-Amazon alternative. AI-powered recommendations based on quality, not sales algorithms.
           </p>
         </section>
@@ -661,7 +661,7 @@ function HomeContent() {
           <div className="bento-grid">
             {/* Left Large Card: Impartiality */}
             <div className="bento-card">
-              <img src="/images/mascot-researcher.png" alt="Impartiality Mascot" className="bento-image-large" />
+              <img src="/images/mascot-researcher.webp" alt="Impartiality Mascot" className="bento-image-large" />
               <div>
                 <h3 style={{ fontSize: "2rem", fontWeight: 900, marginBottom: "1rem" }}>We provide vetted engineers... of books.</h3>
                 <p style={{ fontSize: "1.1rem", lineHeight: "1.6", color: "#444" }}>
@@ -675,7 +675,7 @@ function HomeContent() {
               {/* Top Small Card: AI Precision */}
               <div className="bento-card bento-card-small">
                 <div className="bento-mascot-wrapper bento-mascot-precision">
-                  <img src="/images/mascot-researcher.png" alt="AI Precision Mascot" className="bento-image-small" />
+                  <img src="/images/mascot-researcher.webp" alt="AI Precision Mascot" className="bento-image-small" />
                 </div>
                 <div>
                   <h3 style={{ fontSize: "1.5rem", fontWeight: 900, marginBottom: "0.5rem" }}>AI Precision</h3>
@@ -688,7 +688,7 @@ function HomeContent() {
               {/* Bottom Small Card: Curated Signal */}
               <div className="bento-card bento-card-small">
                 <div className="bento-mascot-wrapper bento-mascot-signal">
-                  <img src="/images/mascot-researcher.png" alt="Curated Signal Mascot" className="bento-image-small" />
+                  <img src="/images/mascot-researcher.webp" alt="Curated Signal Mascot" className="bento-image-small" />
                 </div>
                 <div>
                   <h3 style={{ fontSize: "1.5rem", fontWeight: 900, marginBottom: "0.5rem" }}>Curated Signal</h3>

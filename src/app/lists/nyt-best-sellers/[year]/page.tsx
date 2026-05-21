@@ -1,12 +1,11 @@
 import { nytByYear } from "@/data/nyt-best-sellers";
-import { getAmazonLink, getCoverUrl } from "@/lib/amazon";
+import { getAmazonLink } from "@/lib/amazon";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BookImage } from "@/components/BookImage";
-import { DynamicDescription } from "@/components/DynamicDescription";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { notFound } from "next/navigation";
+import { NYTYearInteractive } from "@/components/NYTYearInteractive";
 
 interface PageProps {
   params: Promise<{ year: string }>;
@@ -52,86 +51,6 @@ export default async function NYTYearPage({ params }: PageProps) {
       },
     })),
   };
-
-  const renderSection = (title: string, books: typeof data.fiction) => (
-    <section style={{ marginBottom: "4rem" }}>
-      <h2
-        style={{
-          fontSize: "2rem",
-          fontWeight: 800,
-          marginBottom: "2rem",
-          borderBottom: "4px solid var(--accent-color)",
-          display: "inline-block",
-        }}
-      >
-        {title}
-      </h2>
-      <div className="results-container">
-        {books.map((book, idx) => (
-          <a
-            key={idx}
-            href={getAmazonLink(book.title, book.author)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="recommendation-result-link"
-          >
-            <div className="recommendation-result">
-              <div className="book-cover-container">
-                <div
-                  className="rank-badge"
-                  style={{
-                    position: "absolute",
-                    top: "-10px",
-                    left: "-10px",
-                    background: "var(--accent-color)",
-                    color: "white",
-                    width: "30px",
-                    height: "30px",
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontWeight: 900,
-                    zIndex: 10,
-                    boxShadow: "2px 2px 0 black",
-                  }}
-                >
-                  {book.rank}
-                </div>
-                <BookImage
-                  src={getCoverUrl(book.isbn)}
-                  isbn={book.isbn}
-                  alt={book.title}
-                  author={book.author}
-                  width={100}
-                  height={150}
-                  className="book-cover-img"
-                  priority={idx < 4}
-                />
-              </div>
-              <div className="result-content">
-                <h3>{book.title}</h3>
-                <div className="author">by {book.author}</div>
-                <DynamicDescription 
-                  isbn={book.isbn} 
-                  fallback={book.description || "A world-class recommendation featured on 123reads. Impartial and curated by leading minds."} 
-                />
-              </div>
-              <div className="amazon-btn" style={{ marginTop: "0" }}>
-                Buy &rarr;
-              </div>
-            </div>
-          </a>
-        ))}
-      </div>
-    </section>
-  );
-
-  // Build prev/next year navigation
-  const years = nytByYear.map((y) => y.year);
-  const currentIdx = years.indexOf(data.year);
-  const prevYear = currentIdx < years.length - 1 ? years[currentIdx + 1] : null;
-  const nextYear = currentIdx > 0 ? years[currentIdx - 1] : null;
 
   return (
     <div className="container">
@@ -206,48 +125,12 @@ export default async function NYTYearPage({ params }: PageProps) {
           </div>
         </div>
 
-        {renderSection(`Fiction — ${data.year}`, data.fiction)}
-        {renderSection(`Non-fiction — ${data.year}`, data.nonFiction)}
-
-        {/* Prev / Next navigation */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginTop: "4rem",
-            paddingTop: "2rem",
-            borderTop: "2px dashed var(--border-color)",
-          }}
-        >
-          {prevYear ? (
-            <Link
-              href={`/lists/nyt-best-sellers/${prevYear}`}
-              style={{
-                fontWeight: 800,
-                textDecoration: "none",
-                color: "var(--text-primary)",
-              }}
-            >
-              &larr; {prevYear}
-            </Link>
-          ) : (
-            <span />
-          )}
-          {nextYear ? (
-            <Link
-              href={`/lists/nyt-best-sellers/${nextYear}`}
-              style={{
-                fontWeight: 800,
-                textDecoration: "none",
-                color: "var(--text-primary)",
-              }}
-            >
-              {nextYear} &rarr;
-            </Link>
-          ) : (
-            <span />
-          )}
-        </div>
+        <NYTYearInteractive
+          year={data.year}
+          label={data.label}
+          fiction={data.fiction}
+          nonFiction={data.nonFiction}
+        />
       </main>
 
       <Footer />

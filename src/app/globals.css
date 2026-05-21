@@ -20,25 +20,17 @@
   padding: 0;
 }
 
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 body {
   background-color: var(--bg-color);
-  background-image: radial-gradient(circle, #d0d0d0 1.5px, transparent 1.5px);
-  background-size: 32px 32px;
-  animation: floatBackground 30s linear infinite;
   color: var(--text-primary);
   font-family: 'Inter', sans-serif;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden; /* ultimate fallback for horizontal scroll */
-}
-
-@keyframes floatBackground {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 64px -64px;
-  }
 }
 
 @keyframes pulse {
@@ -175,9 +167,24 @@ h1 span {
   color: var(--text-primary);
 }
 
+.hero-description {
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 1rem auto;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
 @media (max-width: 640px) {
+  .site-hero {
+    margin-bottom: 1.5rem;
+  }
   .site-headline {
     font-size: 1.5rem;
+  }
+  .hero-description {
+    font-size: 0.95rem;
+    margin: 0.75rem auto;
   }
 }
 
@@ -189,11 +196,13 @@ h1 span {
   margin-bottom: 2rem;
   box-shadow: var(--card-shadow);
   max-width: 100%; /* prevent flex blowout */
+  box-sizing: border-box;
 }
 
 @media (max-width: 640px) {
   .hero {
-    padding: 1.25rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
   }
 }
 
@@ -462,13 +471,13 @@ button.primary:active, button.secondary:active {
 }
 
 .book-description-text {
-  font-size: 0.85rem;
+  font-size: 1rem;
   color: var(--text-secondary);
   margin: 0.5rem 0;
-  line-height: 1.5;
+  line-height: 1.6;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;

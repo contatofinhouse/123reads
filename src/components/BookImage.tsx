@@ -119,7 +119,15 @@ export function BookImage({ src, isbn, alt, author, width, height, className, pr
         height={height}
         className={className}
         priority={priority}
-        onLoad={() => setIsLoading(false)}
+        unoptimized={true}
+        onLoad={(e) => {
+          setIsLoading(false);
+          const target = e.target as HTMLImageElement;
+          // OpenLibrary returns a 1x1 pixel image when cover is missing. We treat this as an error.
+          if (target && target.naturalWidth <= 1) {
+            setError(true);
+          }
+        }}
         onError={() => {
           setError(true);
           setIsLoading(false);

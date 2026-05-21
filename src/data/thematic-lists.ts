@@ -15,7 +15,7 @@ export const thematicLists: ThematicList[] = [
     title: "Best Books for Entrepreneurs",
     slug: "best-books-for-entrepreneurs",
     description: "Essential reading for anyone building a business — from startup strategy to leadership and execution.",
-    image: "/images/theme_entrepreneurs_1777649639796.png",
+    image: "/images/theme_entrepreneurs_1777649639796.webp",
     category: "Business & Tech",
     books: [
       { title: "Zero to One", author: "Peter Thiel", isbn: "9780804139298", description: "How to build companies that create new things, featuring contrarian insights from the PayPal co-founder." },
@@ -29,7 +29,7 @@ export const thematicLists: ThematicList[] = [
     title: "Books About AI and the Future",
     slug: "books-about-ai-and-future",
     description: "Understanding artificial intelligence, its risks, its promises, and what it means for humanity.",
-    image: "/images/theme_ai_1777649666905.png",
+    image: "/images/theme_ai_1777649666905.webp",
     category: "Business & Tech",
     books: [
       { title: "Superintelligence", author: "Nick Bostrom", isbn: "9780198739838", description: "A deep dive into the risks and potential strategies for human survival in the age of AGI." },
@@ -44,7 +44,7 @@ export const thematicLists: ThematicList[] = [
     title: "Must-Read Sci-Fi Classics",
     slug: "must-read-sci-fi-classics",
     description: "The science fiction novels that defined the genre and continue to shape how we think about the future.",
-    image: "/images/theme_scifi_1777649652744.png",
+    image: "/images/theme_scifi_1777649652744.webp",
     category: "Fiction & Classics",
     books: [
       { title: "Foundation", author: "Isaac Asimov", isbn: "9780553293357", description: "The first novel in the epic saga of the fall and rebirth of a galactic empire." },
@@ -58,7 +58,7 @@ export const thematicLists: ThematicList[] = [
     title: "Books Every Teenager Should Read",
     slug: "books-every-teenager-should-read",
     description: "Coming-of-age classics and modern essentials that shape young minds and open new perspectives.",
-    image: "/images/theme_teenager_1777649681991.png",
+    image: "/images/theme_teenager_1777649681991.webp",
     category: "Fiction & Classics",
     books: [
       { title: "To Kill a Mockingbird", author: "Harper Lee", isbn: "9780060935467", description: "A timeless classic about justice, innocence, and growing up in the American South." },
@@ -72,7 +72,7 @@ export const thematicLists: ThematicList[] = [
     title: "Best Fiction of the 21st Century",
     slug: "best-fiction-21st-century",
     description: "The novels from this century that have already earned their place among the all-time greats.",
-    image: "/images/theme_fiction_1777649725844.png",
+    image: "/images/theme_fiction_1777649725844.webp",
     category: "Fiction & Classics",
     books: [
       { title: "The Underground Railroad", author: "Colson Whitehead", isbn: "9780385542364", description: "A Pulitzer Prize-winning novel that reimagines the historical escape route as a literal network of tracks and tunnels." },
@@ -87,7 +87,7 @@ export const thematicLists: ThematicList[] = [
     title: "Psychology & Human Behavior",
     slug: "psychology-and-human-behavior",
     description: "Understand why people think, decide, and act the way they do — from Nobel laureates to behavioral scientists.",
-    image: "/images/theme_psychology_1777649695968.png",
+    image: "/images/theme_psychology_1777649695968.webp",
     category: "Non-Fiction & Growth",
     books: [
       { title: "Influence", author: "Robert Cialdini", isbn: "9780062937650", description: "The definitive guide to the psychology of persuasion and how to defend against it." },
@@ -101,7 +101,7 @@ export const thematicLists: ThematicList[] = [
     title: "Essential History Books",
     slug: "essential-history-books",
     description: "Understanding the past to make sense of the present — from ancient civilizations to modern power dynamics.",
-    image: "/images/theme_history_1777649712824.png",
+    image: "/images/theme_history_1777649712824.webp",
     category: "Non-Fiction & Growth",
     books: [
       { title: "The Lessons of History", author: "Will & Ariel Durant", isbn: "9781439149959", description: "A concise survey of human history and the enduring themes that shape our species." },
@@ -115,7 +115,7 @@ export const thematicLists: ThematicList[] = [
     title: "Books for Personal Growth",
     slug: "books-for-personal-growth",
     description: "Transform your mindset, build better habits, and find deeper meaning with these life-changing reads.",
-    image: "/images/theme_personal_growth_1777649738777.png",
+    image: "/images/theme_personal_growth_1777649738777.webp",
     category: "Non-Fiction & Growth",
     books: [
       { title: "Meditations", author: "Marcus Aurelius", isbn: "9780140449334", description: "The private reflections of the Roman Emperor on stoicism and living a virtuous life." },
@@ -130,7 +130,7 @@ export const thematicLists: ThematicList[] = [
     title: "French Literature",
     slug: "french-literature",
     description: "Masterpieces of French literature, from romantic classics to existentialism.",
-    image: "/images/french_literature_1777649371122.png",
+    image: "/images/french_literature_1777649371122.webp",
     category: "World Literature",
     books: [
       { title: "The Stranger", author: "Albert Camus", isbn: "9780679720201", description: "A landmark of existentialist fiction about an emotionally detached man caught in a senseless crime." },
@@ -144,7 +144,7 @@ export const thematicLists: ThematicList[] = [
     title: "English Literature",
     slug: "english-literature",
     description: "The pillars of English storytelling, exploring society, dystopia, and human nature.",
-    image: "/images/english_literature_1777649384037.png",
+    image: "/images/english_literature_1777649384037.webp",
     category: "World Literature",
     books: [
       { title: "Pride and Prejudice", author: "Jane Austen", isbn: "9780141439518", description: "A sparkling comedy of manners about love, social standing, and first impressions." },
@@ -158,7 +158,7 @@ export const thematicLists: ThematicList[] = [
     title: "Italian Literature",
     slug: "italian-literature",
     description: "From epic medieval poetry to modern post-war realism.",
-    image: "/images/italian_literature_1777649397042.png",
+    image: "/images/italian_literature_1777649397042.webp",
     category: "World Literature",
     books: [
       { title: "The Divine Comedy", author: "Dante Alighieri", isbn: "9780142437223", description: "A monumental journey through Hell, Purgatory, and Paradise." },
@@ -172,7 +172,7 @@ export const thematicLists: ThematicList[] = [
     title: "Portuguese Literature",
     slug: "portuguese-literature",
     description: "Rich narratives spanning Portugal and Brazil, touching on melancholy, blindness, and love.",
-    image: "/images/portuguese_literature_1777649411785.png",
+    image: "/images/portuguese_literature_1777649411785.webp",
     category: "World Literature",
     books: [
       { title: "The Book of Disquiet", author: "Fernando Pessoa", isbn: "9780141183046", description: "A hauntingly beautiful and fragmentary collection of reflections on life and loneliness." },
@@ -186,7 +186,7 @@ export const thematicLists: ThematicList[] = [
     title: "Asian Literature",
     slug: "asian-literature",
     description: "A diverse collection of historical epics, modern surrealism, and groundbreaking sci-fi.",
-    image: "/images/asian_literature_1777649426857.png",
+    image: "/images/asian_literature_1777649426857.webp",
     category: "World Literature",
     books: [
       { title: "The Tale of Genji", author: "Murasaki Shikibu", isbn: "9780142437148", description: "The world's first novel, a grand and poetic exploration of life in the Heian court." },
@@ -200,7 +200,7 @@ export const thematicLists: ThematicList[] = [
     title: "NYT Best Sellers (Fiction)",
     slug: "nyt-best-sellers-fiction",
     description: "The current top-selling fiction books as ranked by the New York Times.",
-    image: "/images/theme-nyt.png",
+    image: "/images/theme-nyt.webp",
     category: "Current Rankings",
     books: [
       { title: "Hope Rises", author: "David Baldacci", isbn: "9781538750438", description: "The latest high-stakes thriller from David Baldacci, featuring Archer and his quest for justice." },
@@ -214,7 +214,7 @@ export const thematicLists: ThematicList[] = [
     title: "Best Books for Productivity",
     slug: "best-books-productivity",
     description: "Master your time and focus with these essential productivity reads.",
-    image: "/images/theme-productivity.png",
+    image: "/images/theme-productivity.webp",
     category: "Non-Fiction & Growth",
     books: [
       { title: "Atomic Habits", author: "James Clear", isbn: "9780735211292", description: "The definitive guide to building good habits and breaking bad ones through tiny changes." },
@@ -228,7 +228,7 @@ export const thematicLists: ThematicList[] = [
     title: "Inspirational Biographies",
     slug: "inspirational-biographies",
     description: "Life stories of incredible individuals that will inspire and motivate you.",
-    image: "/images/theme-biographies.png",
+    image: "/images/theme-biographies.webp",
     category: "Non-Fiction & Growth",
     books: [
       { title: "Steve Jobs", author: "Walter Isaacson", isbn: "9781451648539", description: "The definitive biography of the Apple co-founder, based on exclusive interviews." },
@@ -243,7 +243,7 @@ export const thematicLists: ThematicList[] = [
     title: "BookTok Viral Hits",
     slug: "booktok-viral-hits",
     description: "The books that defined a generation on TikTok. From emotional tear-jerkers to unputdownable thrillers.",
-    image: "/images/theme_booktok.png",
+    image: "/images/theme_booktok.webp",
     category: "Community Favorites",
     books: [
       { title: "The Seven Husbands of Evelyn Hugo", author: "Taylor Jenkins Reid", isbn: "9781501161933", description: "The ultimate 'emotional damage' read that defined a generation of BookTok." },
@@ -257,7 +257,7 @@ export const thematicLists: ThematicList[] = [
     title: "Reddit's All-Time Favorites",
     slug: "reddits-all-time-favorites",
     description: "The most recommended books across r/books, r/printSF, and r/suggestmeabook. High-signal, community-vetted.",
-    image: "/images/theme_reddit.png",
+    image: "/images/theme_reddit.webp",
     category: "Community Favorites",
     books: [
       { title: "Project Hail Mary", author: "Andy Weir", isbn: "9780593135204", description: "Constantly voted the #1 'must-read' on Reddit for its humor and scientific heart." },
