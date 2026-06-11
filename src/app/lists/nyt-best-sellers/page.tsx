@@ -12,13 +12,84 @@ export const metadata: Metadata = {
   description:
     "Browse every NYT Best Sellers list by year: 2024, 2025, 2026. Fiction & Non-fiction rankings curated by 123reads, the impartial Goodreads alternative.",
   alternates: { canonical: "/lists/nyt-best-sellers" },
+  openGraph: {
+    images: ["/api/og?title=NYT+Best+Sellers&subtitle=Every+Year+Ranked"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/api/og?title=NYT+Best+Sellers&subtitle=Every+Year+Ranked"],
+  },
 };
 
 export default function NYTIndexPage() {
   const latestYear = nytByYear[0];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://123reads.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Lists",
+            "item": "https://123reads.com/lists"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "NYT Best Sellers"
+          }
+        ]
+      },
+      {
+        "@type": "CollectionPage",
+        "name": "New York Times Best Sellers — All Years",
+        "description": "Browse every NYT Best Sellers list by year. Fiction & Non-fiction rankings curated by 123reads.",
+        "url": "https://123reads.com/lists/nyt-best-sellers",
+        "hasPart": nytByYear.map((y) => ({
+          "@type": "WebPage",
+          "name": `NYT Best Sellers ${y.year}`,
+          "url": `https://123reads.com/lists/nyt-best-sellers/${y.year}`
+        }))
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the NYT Best Seller list?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The New York Times Best Seller list is considered the industry gold standard for ranking books, based on actual sales data across independent and chain bookstores."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How often does 123reads update the NYT lists?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We maintain annual archives to help you discover books that have stood the test of time, organizing them by year with full rankings and descriptions."
+            }
+          }
+        ]
+      }
+    ]
+  };
+
   return (
     <div className="container">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Header />
 
       <main>
@@ -56,6 +127,7 @@ export default function NYTIndexPage() {
               key={y.year}
               href={`/lists/nyt-best-sellers/${y.year}`}
               className="nyt-year-card"
+              title={`View New York Times Best Sellers for ${y.year}`}
             >
               <span className="nyt-year-number">{y.year}</span>
               <p className="nyt-year-label">{y.label}</p>

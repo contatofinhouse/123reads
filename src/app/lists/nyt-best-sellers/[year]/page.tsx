@@ -24,6 +24,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `NYT Best Sellers ${data.year} — Fiction & Non-fiction | 123reads`,
     description: `Browse the ${data.year} New York Times Best Sellers list. ${data.fiction.length} fiction and ${data.nonFiction.length} non-fiction picks curated by 123reads.`,
     alternates: { canonical: `/lists/nyt-best-sellers/${data.year}` },
+    openGraph: {
+      images: [`/api/og?title=NYT+Best+Sellers+${data.year}&subtitle=Fiction+%26+Non-fiction`],
+    },
+    twitter: {
+      card: "summary_large_image",
+      images: [`/api/og?title=NYT+Best+Sellers+${data.year}&subtitle=Fiction+%26+Non-fiction`],
+    },
   };
 }
 
@@ -36,20 +43,52 @@ export default async function NYTYearPage({ params }: PageProps) {
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: `NYT Best Sellers ${data.year}`,
-    description: data.label,
-    itemListElement: allBooks.map((book, idx) => ({
-      "@type": "ListItem",
-      position: idx + 1,
-      item: {
-        "@type": "Book",
-        name: book.title,
-        author: { "@type": "Person", name: book.author },
-        isbn: book.isbn,
-        url: getAmazonLink(book.title, book.author),
+    "@graph": [
+      {
+        "@type": "ItemList",
+        "name": `NYT Best Sellers ${data.year}`,
+        "description": data.label,
+        "itemListElement": allBooks.map((book, idx) => ({
+          "@type": "ListItem",
+          "position": idx + 1,
+          "item": {
+            "@type": "Book",
+            "name": book.title,
+            "author": { "@type": "Person", "name": book.author },
+            "isbn": book.isbn,
+            "url": getAmazonLink(book.title, book.author),
+          },
+        })),
       },
-    })),
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://123reads.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Lists",
+            "item": "https://123reads.com/lists"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "NYT Best Sellers",
+            "item": "https://123reads.com/lists/nyt-best-sellers"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": `${data.year}`
+          }
+        ]
+      }
+    ]
   };
 
   return (
