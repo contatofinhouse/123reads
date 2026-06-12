@@ -2,12 +2,13 @@ import { GoogleGenAI } from "@google/genai";
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+import os from "os";
 
 export const dynamic = 'force-dynamic';
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-const CACHE_FILE = path.join(process.cwd(), "book-of-the-day.json");
+const CACHE_FILE = path.join(os.tmpdir(), "book-of-the-day.json");
 
 interface BookOfTheDay {
   date: string;
