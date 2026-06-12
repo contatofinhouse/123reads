@@ -57,7 +57,7 @@ export default function TrendingWidget() {
               {book.title}
             </h4>
             <p style={{ margin: 0, fontSize: "9px", color: "#555", fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-              {book.mentions} lists
+              {book.count} lists
             </p>
           </a>
         ))}
