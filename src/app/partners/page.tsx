@@ -67,6 +67,28 @@ export default function PartnersPage() {
             </div>
           </div>
 
+          {/* Trending Widget Info */}
+          <div style={{ background: "var(--card-bg)", padding: "2rem", border: "2px solid var(--card-border)", borderRadius: "20px", boxShadow: "var(--card-shadow)" }}>
+            <h2 style={{ fontSize: "1.5rem", fontWeight: 900, marginBottom: "1rem" }}>"Trending Books" Widget</h2>
+            <p style={{ color: "var(--text-secondary)", marginBottom: "1.5rem", lineHeight: 1.6 }}>
+              Display the most recommended books across all our curated lists in a slick horizontal carousel.
+            </p>
+            <div style={{ marginBottom: "1.5rem", border: "2px dashed #ccc", padding: "10px", background: "#f9f9f9", borderRadius: "10px", display: "flex", justifyContent: "center" }}>
+              <iframe 
+                src="/widgets/trending" 
+                width="340" 
+                height="320" 
+                style={{ border: "none", borderRadius: "12px", boxShadow: "0 4px 12px rgba(0,0,0,0.1)" }}
+                title="123reads Trending Books"
+              />
+            </div>
+            <div style={{ background: "#121212", color: "#fff", padding: "1rem", borderRadius: "8px", fontSize: "0.8rem", overflowX: "auto" }}>
+              <code>
+                {`<iframe src="https://123reads.com/widgets/trending" width="340" height="320" style="border:none; border-radius:12px;" title="123reads Trending Books"></iframe>`}
+              </code>
+            </div>
+          </div>
+
         </div>
       </main>
       <Footer />
