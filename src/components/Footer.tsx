@@ -17,7 +17,7 @@ export function Footer() {
           <Link href="/hunt">Community Hunt</Link>
           <Link href="/lists/nyt-best-sellers">NYT Best Sellers</Link>
           <Link href="/guides/kindle">Kindle Guide</Link>
-          <Link href="/partners">Partnerships & Widgets</Link>
+          <Link href="/partners">Partners</Link>
           <Link href="/affiliate-disclosure">Disclosure</Link>
         </div>
 
