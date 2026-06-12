@@ -29,6 +29,7 @@ export default function TrendingWidget() {
             href={`https://123reads.com/?q=${encodeURIComponent(book.title + " " + book.author)}`}
             target="_blank"
             rel="noopener noreferrer"
+            className="trending-book-card"
             style={{ 
               display: "flex", 
               flexDirection: "column", 
@@ -39,8 +40,6 @@ export default function TrendingWidget() {
               scrollSnapAlign: "start",
               transition: "transform 0.2s"
             }}
-            onMouseOver={e => e.currentTarget.style.transform = "translateY(-2px)"}
-            onMouseOut={e => e.currentTarget.style.transform = "translateY(0)"}
           >
             <div style={{ width: "100px", height: "150px", border: "1px solid #eee", boxShadow: "2px 2px 0px #121212", marginBottom: "8px" }}>
               <BookImage
@@ -68,6 +67,7 @@ export default function TrendingWidget() {
           href="https://123reads.com/insights"
           target="_blank" 
           rel="noopener noreferrer"
+          className="trending-see-more"
           style={{
             display: "block",
             textAlign: "center",
@@ -81,8 +81,6 @@ export default function TrendingWidget() {
             boxShadow: "3px 3px 0px #e62429",
             transition: "transform 0.1s"
           }}
-          onMouseOver={e => e.currentTarget.style.transform = "translate(-1px, -1px)"}
-          onMouseOut={e => e.currentTarget.style.transform = "translate(0, 0)"}
         >
           See more
         </a>
@@ -96,6 +94,8 @@ export default function TrendingWidget() {
         ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
         ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #888; }
+        .trending-book-card:hover { transform: translateY(-2px); }
+        .trending-see-more:hover { transform: translate(-1px, -1px); }
       `}</style>
     </div>
   );
